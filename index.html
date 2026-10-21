@@ -166,7 +166,10 @@ nav.main svg{width:22px;height:22px}
 .subj-switch.in-hero .subj.on{background:var(--tab-on);color:var(--tab-on-ink)}
 #app[data-nav=a] .subj-switch.in-hero,#app:not([data-nav=a]) .subj-switch.in-hdr{display:none}
 /* A: one top bar, subjects in the middle */
+#app[data-nav=a] .top-in{flex-wrap:nowrap;gap:14px}
 #app[data-nav=a] .subj-switch.in-hdr{margin:0 auto}
+#app[data-nav=a] .subj-switch .subj{padding:8px 14px}
+#app[data-nav=a] .who-btn small{display:none}
 #app[data-nav=a] nav.main{margin:0;gap:2px}
 #app[data-nav=a] nav.main button{padding:10px 12px;font-size:.92rem}
 #app[data-nav=a] .hero{min-height:calc(100vh - 76px)}
@@ -336,7 +339,7 @@ nav.main svg{width:22px;height:22px}
   .stops{grid-template-columns:repeat(2,minmax(0,1fr))}
   .stop:nth-child(even){margin-top:0}
   .worlds{grid-template-columns:repeat(3,minmax(0,1fr))}
-  #app[data-nav=a] .top-in{row-gap:10px}
+  #app[data-nav=a] .top-in{flex-wrap:wrap;row-gap:10px}
   #app[data-nav=a] .subj-switch.in-hdr{order:3;margin:0 auto}
   #app[data-nav=a] nav.main{order:2;margin-left:auto}
   .buddy-ob{width:150px}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="KnowHippo prototype: a kid-friendly sign-in where students pick a world, then explore their learning targets in it.">
+<meta name="description" content="KnowHippo prototype: a kid-friendly setup where students pick a world, then explore their learning targets in it.">
 <title>KnowHippo Worlds</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Press+Start+2P&family=Patrick+Hand&family=Bungee&family=Rajdhani:wght@600;700&display=swap">
@@ -79,17 +79,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,input:focus-visible+spa
 .field{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
 .big-input{font:inherit;font-size:1.6rem;font-weight:800;letter-spacing:.02em;color:var(--brand-ink);border:3px solid var(--line);border-radius:18px;padding:14px 18px;width:100%;max-width:420px;background:#fbfaff;transition:border-color .15s}
 .big-input:focus{border-color:var(--brand);outline:none;background:#fff}
-.code-input{text-transform:uppercase;letter-spacing:.18em}
-.pics{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:10px;max-width:640px}
-.pic{border:3px solid var(--line);background:#fbfaff;border-radius:16px;aspect-ratio:1;display:grid;place-items:center;padding:6px;transition:transform .12s,border-color .12s}
-.pic:hover{transform:translateY(-2px)}
-.pic svg{width:100%;height:auto;max-width:44px}
-.pic[aria-pressed=true]{border-color:var(--brand);background:var(--brand-soft)}
-.slots{display:flex;gap:10px;margin-top:12px;align-items:center}
-.slot{width:58px;height:58px;border-radius:16px;border:3px dashed #d6cdef;display:grid;place-items:center;background:#fff}
-.slot.full{border-style:solid;border-color:var(--brand);background:var(--brand-soft);animation:pop .25s}
-.slot svg{width:36px}
-.clear{border:0;background:none;color:var(--brand);font-weight:800;font-size:.9rem;padding:6px 8px;margin-left:6px}
 .avatars{display:flex;gap:12px;flex-wrap:wrap}
 .av{border:3px solid transparent;background:none;padding:4px;border-radius:18px;transition:transform .12s}
 .av:hover{transform:translateY(-2px)}
@@ -322,7 +311,6 @@ nav.main svg{width:22px;height:22px}
   .buddy-ob{width:120px;align-self:flex-start;margin:70px 0 -30px 10px;z-index:2}
   .buddy-ob .talk{left:110px;right:auto;top:6px;width:min(250px,calc(100vw - 170px))}
   .buddy-ob .talk::after{left:-10px;top:18px;bottom:auto;border:10px solid transparent;border-right-color:#fff;border-left:0}
-  .pics{grid-template-columns:repeat(5,minmax(0,1fr))}
   .helpers{grid-template-columns:1fr}
   .who-btn small,.who-btn b{display:none}
   .trow{grid-template-columns:minmax(0,1fr) auto}
@@ -356,24 +344,9 @@ nav.main svg{width:22px;height:22px}
     <div class="buddy-ob" aria-hidden="true"><p class="talk" id="talk"></p><img id="ob-hippo" src="img/hippo-islands.webp" alt=""></div>
     <section class="panel" id="panel">
 
-      <div class="step" data-step="signin">
-        <div class="q"><h1>Welcome to KnowHippo!</h1><button class="say" type="button" data-say="Welcome to KnowHippo! Type your class code, then tap your three secret pictures." aria-label="Read aloud"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button></div>
-        <p class="lede">Let’s get you signed in. Your teacher gave your class a code.</p>
-        <div class="field">
-          <h2><label for="code">1. Type your class code</label></h2>
-          <input class="big-input code-input" id="code" value="MATH-3B" maxlength="10" autocomplete="off" spellcheck="false">
-        </div>
-        <div class="field">
-          <h2>2. Tap your 3 secret pictures</h2>
-          <div class="pics" id="pics"></div>
-          <div class="slots" id="slots" aria-live="polite"></div>
-          <p class="hint">Prototype: any 3 pictures will work.</p>
-        </div>
-      </div>
-
-      <div class="step" data-step="name" hidden>
-        <div class="q"><h1>What should Hippo call you?</h1><button class="say" type="button" data-say="What should Hippo call you? Type your name, then pick your badge." aria-label="Read aloud"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button></div>
-        <p class="lede">This is the name you’ll see on your adventures.</p>
+      <div class="step" data-step="name">
+        <div class="q"><h1>Hi! What should Hippo call you?</h1><button class="say" type="button" data-say="Welcome to KnowHippo! What should Hippo call you? Type your name, then pick your badge." aria-label="Read aloud"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button></div>
+        <p class="lede">Welcome to KnowHippo! This is the name you’ll see on your adventures.</p>
         <div class="field">
           <h2><label for="name">Your name</label></h2>
           <input class="big-input" id="name" placeholder="Type your name" maxlength="18" autocomplete="off">
@@ -532,20 +505,8 @@ const SKINS={
 };
 const ORDER=['islands','sports','gaming','nextgen','habitats','bog','notebook'];
 
-/* Picture password + badges */
-const PICS={
-  star:'<polygon points="20,3 25,15 38,15 27,23 31,36 20,28 9,36 13,23 2,15 15,15" fill="#ffc928" stroke="#e0a400" stroke-width="1.5" stroke-linejoin="round"/>',
-  heart:'<path d="M20 35C6 25 2 17 6 10c4-6 11-5 14 1 3-6 10-7 14-1 4 7 0 15-14 25z" fill="#ff5c8a"/>',
-  moon:'<path d="M27 5a15 15 0 1 0 8 22A12 12 0 1 1 27 5z" fill="#8b6be6"/>',
-  sun:'<g stroke="#ffb020" stroke-width="3" stroke-linecap="round"><path d="M20 3v5M20 32v5M3 20h5M32 20h5M8 8l3.5 3.5M28.5 28.5 32 32M8 32l3.5-3.5M28.5 11.5 32 8"/></g><circle cx="20" cy="20" r="8" fill="#ffc928"/>',
-  apple:'<path d="M20 12c-6-4-14 0-13 9 1 9 7 15 13 12 6 3 12-3 13-12 1-9-7-13-13-9z" fill="#e5322d"/><path d="M20 12c0-4 1-7 3-8" stroke="#6b4a2b" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="26" cy="7" rx="5" ry="2.5" fill="#3ad16b" transform="rotate(-25 26 7)"/>',
-  fish:'<path d="M28 20l10-8v16z" fill="#1f8fd0"/><ellipse cx="17" cy="20" rx="14" ry="9" fill="#2fa7e0"/><circle cx="10" cy="18" r="2" fill="#0b2a44"/>',
-  tree:'<rect x="17" y="27" width="6" height="10" rx="1" fill="#8a5d34"/><path d="M20 3 33 22H7z" fill="#2f8a3c"/><path d="M20 10 35 29H5z" fill="#3fa356"/>',
-  cloud:'<path d="M11 31a7 7 0 0 1 0-14 10 10 0 0 1 19-2 8 8 0 0 1 0 16z" fill="#7cc4ff"/>',
-  flower:'<g fill="#ff8ac2"><circle cx="20" cy="10" r="6"/><circle cx="29.5" cy="17" r="6"/><circle cx="26" cy="28" r="6"/><circle cx="14" cy="28" r="6"/><circle cx="10.5" cy="17" r="6"/></g><circle cx="20" cy="20" r="5" fill="#ffc928"/>'
-};
+/* Badges */
 const AVATARS={sun:'#ffcf2e',mint:'#5fe0b5',coral:'#ff8a7a',sky:'#6cc5ff',grape:'#b48cff',lime:'#b8f05a'};
-const pic=k=>`<svg viewBox="0 0 40 40" aria-hidden="true">${PICS[k]}</svg>`;
 const badge=(c,size=30)=>`<svg width="${size}" height="${Math.round(size*.66)}" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="1" width="28" height="18" rx="9" fill="#291454"/><circle cx="10" cy="10" r="4.5" fill="#fff"/><circle cx="20" cy="10" r="4.5" fill="#fff"/><circle cx="10" cy="10" r="2" fill="${c}"/><circle cx="20" cy="10" r="2" fill="${c}"/></svg>`;
 function hippoHead(){
   return `<svg viewBox="0 0 120 96" aria-hidden="true"><ellipse cx="30" cy="22" rx="10" ry="10" fill="#7b5cd6"/><ellipse cx="90" cy="22" rx="10" ry="10" fill="#7b5cd6"/><ellipse cx="30" cy="22" rx="5" ry="5" fill="#f2a3c7"/><ellipse cx="90" cy="22" rx="5" ry="5" fill="#f2a3c7"/><ellipse cx="60" cy="50" rx="40" ry="34" fill="#8b6be6"/><ellipse cx="60" cy="66" rx="33" ry="21" fill="#b9a3f5"/><ellipse cx="50" cy="60" rx="3.5" ry="4.5" fill="#5b3fb5"/><ellipse cx="70" cy="60" rx="3.5" ry="4.5" fill="#5b3fb5"/><circle cx="44" cy="38" r="9" fill="#fff"/><circle cx="76" cy="38" r="9" fill="#fff"/><circle cx="46" cy="39" r="4.5" fill="#22163f"/><circle cx="78" cy="39" r="4.5" fill="#22163f"/><circle cx="47.5" cy="37" r="1.6" fill="#fff"/><circle cx="79.5" cy="37" r="1.6" fill="#fff"/><path d="M46 74q14 11 28 0" fill="none" stroke="#4a2f99" stroke-width="3" stroke-linecap="round"/></svg>`;
@@ -582,23 +543,20 @@ function applyHelpers(){
 }
 
 /* ---------- Sign-in wizard ---------- */
-const STEPS=['signin','name','world','helpers','ready'];
-const LABELS=['Sign in','Name','World','Helpers','Go!'];
-let step=0, picked=[], returnToApp=false;
+const STEPS=['name','world','helpers','ready'];
+const LABELS=['Name','World','Helpers','Go!'];
+let step=0, returnToApp=false;
 const TALK={
-  signin:()=>'Hi there! I’m Hippo. Let’s get you signed in.',
-  name:()=>state.name.trim()?`Nice to meet you, ${nm()}!`:'I can’t wait to learn your name!',
+  name:()=>state.name.trim()?`Nice to meet you, ${nm()}!`:'Hi there! I’m Hippo. What’s your name?',
   world:()=>`Ooh, ${SKINS[state.skin].name}! Great pick.`,
   helpers:()=>'These helpers can make learning easier.',
   ready:()=>`Let’s go, ${nm()}!`
 };
 function canNext(){
-  if(STEPS[step]==='signin')return $('code').value.trim().length>=3&&picked.length===3;
   if(STEPS[step]==='name')return state.name.trim().length>0;
   return true;
 }
 function needText(){
-  if(STEPS[step]==='signin'){if($('code').value.trim().length<3)return 'Type your class code';if(picked.length<3)return `Tap ${3-picked.length} more picture${3-picked.length===1?'':'s'}`}
   if(STEPS[step]==='name'&&!state.name.trim())return 'Type your name to keep going';
   return '';
 }
@@ -616,15 +574,11 @@ function showStep(i){
   $('back').hidden=i===0;
   const last=i===STEPS.length-1;
   $('next').classList.toggle('go',last);
-  $('next').firstChild.textContent=last?'Enter KnowHippo ':(i===0?'Sign in ':'Next ');
+  $('next').firstChild.textContent=last?'Enter KnowHippo ':'Next ';
   if(STEPS[i]==='ready')renderReady();
   renderTrail(); refreshNav();
-  const f=document.querySelector(`.step[data-step="${STEPS[i]}"] input`); if(f&&STEPS[i]!=='signin')setTimeout(()=>f.focus(),50);
+  const f=document.querySelector(`.step[data-step="${STEPS[i]}"] input`); if(f)setTimeout(()=>f.focus(),50);
   if(state.read){const b=document.querySelector(`.step[data-step="${STEPS[i]}"] .say`); if(b)say(b.dataset.say)}
-}
-function renderPics(){
-  $('pics').innerHTML=Object.keys(PICS).map(k=>`<button type="button" class="pic" data-k="${k}" aria-label="${k}" aria-pressed="${picked.includes(k)}">${pic(k)}</button>`).join('');
-  $('slots').innerHTML=[0,1,2].map(i=>`<span class="slot ${picked[i]?'full':''}">${picked[i]?pic(picked[i]):''}</span>`).join('')+(picked.length?'<button class="clear" type="button" id="clear-pics">Start over</button>':'');
 }
 function renderAvatars(){
   $('avatars').innerHTML=Object.entries(AVATARS).map(([k,c])=>`<button type="button" class="av" role="radio" data-k="${k}" aria-label="${k} badge" aria-checked="${k===state.avatar}"><span style="background:${c}">${badge('#291454',34)}</span></button>`).join('');
@@ -652,14 +606,6 @@ function confetti(){
   document.body.appendChild(box); setTimeout(()=>box.remove(),3400);
 }
 
-$('pics').addEventListener('click',e=>{
-  if(e.target.closest('#clear-pics')){picked=[];renderPics();refreshNav();return}
-  const b=e.target.closest('.pic'); if(!b||picked.length>=3)return;
-  picked.push(b.dataset.k); blip(500+picked.length*120); renderPics(); refreshNav();
-  if(picked.length===3)setTimeout(()=>$('next').focus(),50);
-});
-$('slots').addEventListener('click',e=>{if(e.target.closest('#clear-pics')){picked=[];renderPics();refreshNav()}});
-$('code').addEventListener('input',refreshNav);
 $('name').addEventListener('input',e=>{state.name=e.target.value;refreshNav()});
 $('avatars').addEventListener('click',e=>{const b=e.target.closest('.av');if(!b)return;state.avatar=b.dataset.k;blip(700);renderAvatars()});
 $('worlds').addEventListener('click',e=>{
@@ -676,7 +622,7 @@ document.querySelectorAll('.say').forEach(b=>b.onclick=()=>say(b.dataset.say));
 $('back').onclick=()=>{blip(440);showStep(Math.max(0,step-1))};
 $('next').onclick=()=>{
   if(!canNext())return;
-  if(returnToApp&&STEPS[step]!=='signin'&&STEPS[step]!=='ready'){save();blip(880);enterApp(false);return}
+  if(returnToApp&&STEPS[step]!=='ready'){save();blip(880);enterApp(false);return}
   if(step<STEPS.length-1){blip(660+step*80);showStep(step+1);return}
   save();blip(990);confetti();setTimeout(()=>enterApp(true),state.calm?0:700);
 };
@@ -684,10 +630,9 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('onboard').hidden
 
 function startOnboarding(at=0,fromApp=false){
   returnToApp=fromApp;
-  if(at===0)picked=[];
   $('name').value=state.name; $('opt-read').checked=!!state.read; $('opt-sound').checked=!!state.sound; $('opt-calm').checked=!!state.calm;
   $('size-reg').setAttribute('aria-pressed',state.size!=='large'); $('size-lg').setAttribute('aria-pressed',state.size==='large');
-  renderPics(); renderAvatars(); renderWorlds(); setObSkin();
+  renderAvatars(); renderWorlds(); setObSkin();
   $('app').hidden=true; $('onboard').hidden=false; window.scrollTo(0,0);
   showStep(at);
   if(fromApp){$('next').firstChild.textContent='Save ';$('back').hidden=true}
@@ -761,7 +706,7 @@ document.querySelector('nav.main').addEventListener('click',e=>{const b=e.target
 $('stops').addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;blip(780);openTopic=+c.dataset.i;if(state.read)say(TOPICS[openTopic].t);setView('path')});
 $('topics').addEventListener('click',e=>{const r=e.target.closest('.trow');if(!r)return;blip(780);openTopic=+r.dataset.i;setView('path')});
 $('path-back').onclick=()=>{blip(440);setView('map')};
-$('change-world').onclick=()=>{blip(440);startOnboarding(2,true)};
+$('change-world').onclick=()=>{blip(440);startOnboarding(STEPS.indexOf('world'),true)};
 $('speak').onclick=()=>{const S=SKINS[state.skin];say(`${S.h}. ${S.sub}`)};
 $('who').onclick=()=>{const m=$('menu');m.hidden=!m.hidden;$('who').setAttribute('aria-expanded',!m.hidden)};
 document.addEventListener('click',e=>{if(!e.target.closest('.who'))$('menu').hidden=true});

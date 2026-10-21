@@ -145,8 +145,6 @@ nav.main svg{width:22px;height:22px}
 .menu{position:absolute;right:0;top:calc(100% + 8px);background:#fff;color:var(--brand-ink);border-radius:16px;box-shadow:0 18px 40px rgba(20,10,60,.25);padding:8px;min-width:220px;z-index:20;display:flex;flex-direction:column}
 .menu button{border:0;background:none;text-align:left;padding:11px 12px;border-radius:10px;font-weight:700}
 .menu button:hover{background:var(--brand-soft)}
-.subjects{background:var(--tabs);border-bottom:1px solid var(--hdr-line);padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.subjects-in{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
 .subj{border:0;background:var(--tab);color:var(--hdr-ink);font-weight:800;font-size:1.1rem;padding:11px 36px;border-radius:14px;display:flex;gap:10px;align-items:center}
 .subj.on{background:var(--tab-on);color:var(--tab-on-ink);box-shadow:0 5px 12px rgba(112,56,243,.17)}
 .subj .soon{font-size:.6rem;font-weight:800;letter-spacing:.1em;background:rgba(127,127,127,.15);padding:3px 7px;border-radius:6px}
@@ -159,6 +157,43 @@ nav.main svg{width:22px;height:22px}
 [data-skin=nextgen] .subj,[data-skin=nextgen] nav.main button{font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 [data-skin=nextgen] .subj{border-radius:2px}
 
+/* One navigation, three ways (A/B/C prototype control). Subjects live in a compact switcher. */
+.subj-switch{display:inline-flex;gap:4px;background:var(--tabs);padding:4px;border-radius:18px;border:1px solid var(--hdr-line)}
+.subj-switch .subj{padding:8px 18px;font-size:.95rem;border-radius:14px}
+.subj-switch .subj svg{width:18px;height:18px}
+.subj-switch.in-hero{margin:0 auto 14px;background:var(--chip);border-color:transparent;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.subj-switch.in-hero .subj{background:transparent;color:var(--chip-ink)}
+.subj-switch.in-hero .subj.on{background:var(--tab-on);color:var(--tab-on-ink)}
+#app[data-nav=a] .subj-switch.in-hero,#app:not([data-nav=a]) .subj-switch.in-hdr{display:none}
+/* A: one top bar, subjects in the middle */
+#app[data-nav=a] .subj-switch.in-hdr{margin:0 auto}
+#app[data-nav=a] nav.main{margin:0;gap:2px}
+#app[data-nav=a] nav.main button{padding:10px 12px;font-size:.92rem}
+#app[data-nav=a] .hero{min-height:calc(100vh - 76px)}
+/* B: side rail */
+#app[data-nav=b] header.top{position:fixed;left:0;top:0;bottom:0;width:104px;z-index:30;border-bottom:0;border-right:1px solid var(--hdr-line);padding:16px 8px calc(16px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+#app[data-nav=b] .top-in{flex-direction:column;flex-wrap:nowrap;height:100%;gap:14px}
+#app[data-nav=b] .logo .wordmark,#app[data-nav=b] .who-btn > span:not(.avatar),#app[data-nav=b] .who-btn > svg{display:none}
+#app[data-nav=b] nav.main{flex-direction:column;flex-wrap:nowrap;margin:8px 0 0;width:100%;gap:6px;order:0}
+#app[data-nav=b] nav.main button{flex-direction:column;gap:4px;padding:12px 4px;font-size:.74rem;width:100%;text-align:center;line-height:1.15}
+#app[data-nav=b] nav.main svg{width:26px;height:26px}
+#app[data-nav=b] .who{margin-top:auto}
+#app[data-nav=b] .menu{left:calc(100% + 10px);right:auto;top:auto;bottom:0}
+#app[data-nav=b] .hero{margin-left:104px;min-height:100vh}
+/* C: floating dock over a full-screen world */
+#app[data-nav=c] header.top{position:absolute;left:0;right:0;top:0;z-index:30;background:transparent;border:0}
+#app[data-nav=c] .logo,#app[data-nav=c] .who-btn{background:var(--hdr);border:1px solid var(--hdr-line);border-radius:18px;padding:6px 14px 6px 8px;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+#app[data-nav=c] .who{margin-left:auto}
+#app[data-nav=c] nav.main{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;flex-wrap:nowrap;margin:0;width:auto;order:0;background:var(--hdr);border:1px solid var(--hdr-line);border-radius:24px;padding:6px;gap:4px;box-shadow:0 14px 34px rgba(0,0,0,.3)}
+#app[data-nav=c] nav.main button{flex-direction:column;gap:3px;padding:9px 18px;font-size:.76rem;border-radius:18px}
+#app[data-nav=c] nav.main svg{width:24px;height:24px}
+#app[data-nav=c] .hero{min-height:100vh;padding-top:96px;padding-bottom:120px}
+#app[data-nav=c] ~ .toast{bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+.abc{position:fixed;right:max(14px,env(safe-area-inset-right,0px));top:calc(50% - 60px);z-index:70;background:#1b1530;color:#fff;border-radius:16px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 12px 30px rgba(0,0,0,.35);font-family:'Manrope',system-ui,sans-serif;width:64px}
+.abc .lbl{font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.abc button{width:40px;height:40px;border-radius:12px;border:0;background:#2c2448;color:#fff;font-weight:800;font-size:1rem}
+.abc button[aria-pressed=true]{background:#20d9c5;color:#1b1530}
+.abc small{font-size:.6rem;line-height:1.25;text-align:center;opacity:.8}
 .hero{position:relative;overflow:hidden;background:var(--art) center/cover no-repeat,var(--sky);min-height:calc(100vh - 150px);padding-block:30px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 50% 32% at 50% 10%,var(--veil),transparent 75%);pointer-events:none}
 .backdrop{position:absolute;inset:0;pointer-events:none}
@@ -301,7 +336,9 @@ nav.main svg{width:22px;height:22px}
   .stops{grid-template-columns:repeat(2,minmax(0,1fr))}
   .stop:nth-child(even){margin-top:0}
   .worlds{grid-template-columns:repeat(3,minmax(0,1fr))}
-  nav.main{order:3;width:100%;justify-content:center;margin:0}
+  #app[data-nav=a] .top-in{row-gap:10px}
+  #app[data-nav=a] .subj-switch.in-hdr{order:3;margin:0 auto}
+  #app[data-nav=a] nav.main{order:2;margin-left:auto}
   .buddy-ob{width:150px}
   .path-wrap{grid-template-columns:1fr}
   .path-panel{position:static}
@@ -322,7 +359,18 @@ nav.main svg{width:22px;height:22px}
   .worlds{grid-template-columns:repeat(2,minmax(0,1fr))}
   .world .thumb{height:92px}
   .stops{grid-template-columns:1fr;gap:24px}
-  .subj{padding:10px 16px;font-size:1rem}
+  .subj-switch .subj{padding:7px 12px;font-size:.88rem}
+  #app[data-nav=a] nav.main button{font-size:0;gap:0;padding:10px}
+  #app[data-nav=b] header.top{top:auto;right:0;width:auto;height:auto;border-right:0;border-top:1px solid var(--hdr-line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+  #app[data-nav=b] .top-in{flex-direction:row;height:auto}
+  #app[data-nav=b] .logo{display:none}
+  #app[data-nav=b] nav.main{flex-direction:row;margin:0;flex:1}
+  #app[data-nav=b] .who{margin:0}
+  #app[data-nav=b] .menu{left:auto;right:0;bottom:calc(100% + 10px)}
+  #app[data-nav=b] .hero{margin-left:0;padding-bottom:110px}
+  #app[data-nav=c] .logo .wordmark{display:none}
+  .abc{top:auto;bottom:calc(90px + env(safe-area-inset-bottom,0px));width:auto;flex-direction:row;padding:6px}
+  .abc small{display:none}
   .buddy .hippo{width:100px}
   .bubble{font-size:1rem}
   .stats{grid-template-columns:1fr}
@@ -407,9 +455,13 @@ nav.main svg{width:22px;height:22px}
 </div>
 
 <div id="app" hidden>
+  <template id="subj-tpl"><button class="subj on" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="2" width="16" height="20" rx="3" opacity=".35"/><rect x="7" y="5" width="10" height="4" rx="1"/><circle cx="8.5" cy="13" r="1.4"/><circle cx="12" cy="13" r="1.4"/><circle cx="15.5" cy="13" r="1.4"/><circle cx="8.5" cy="17" r="1.4"/><circle cx="12" cy="17" r="1.4"/><circle cx="15.5" cy="17" r="1.4"/></svg>Math</button>
+      <button class="subj" type="button"><svg width="22" height="20" viewBox="0 0 24 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 4c4-1 7 0 10 2 3-2 6-3 10-2v14c-4-1-7 0-10 2-3-2-6-3-10-2z"/><path d="M12 6v14"/></svg>Reading</button>
+      <button class="subj off" type="button" aria-disabled="true"><svg width="18" height="20" viewBox="0 0 20 22" fill="currentColor"><path d="M7 1h6v2h-1v5l6 10a2.5 2.5 0 0 1-2 4H4a2.5 2.5 0 0 1-2-4l6-10V3H7z" opacity=".7"/></svg>Science <span class="soon">SOON</span></button></template>
   <header class="top">
     <div class="top-in">
       <div class="logo"><span class="mark" id="hdr-logo"></span><span class="wordmark">KnowHippo</span></div>
+      <div class="subj-switch in-hdr" role="group" aria-label="Subject"></div>
       <nav class="main" aria-label="Student navigation">
         <button type="button" class="on" data-view="map"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg>My Learning</button>
         <button type="button" data-view="progress"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="14" width="3.5" height="6" rx="1"/><rect x="8.5" y="11" width="3.5" height="9" rx="1"/><rect x="14" y="8" width="3.5" height="12" rx="1"/><rect x="19.5" y="4" width="2.5" height="16" rx="1"/></svg>My Progress</button>
@@ -426,17 +478,11 @@ nav.main svg{width:22px;height:22px}
       </div>
     </div>
   </header>
-  <div class="subjects">
-    <div class="subjects-in">
-      <button class="subj on" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="2" width="16" height="20" rx="3" opacity=".35"/><rect x="7" y="5" width="10" height="4" rx="1"/><circle cx="8.5" cy="13" r="1.4"/><circle cx="12" cy="13" r="1.4"/><circle cx="15.5" cy="13" r="1.4"/><circle cx="8.5" cy="17" r="1.4"/><circle cx="12" cy="17" r="1.4"/><circle cx="15.5" cy="17" r="1.4"/></svg>Math</button>
-      <button class="subj" type="button"><svg width="22" height="20" viewBox="0 0 24 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 4c4-1 7 0 10 2 3-2 6-3 10-2v14c-4-1-7 0-10 2-3-2-6-3-10-2z"/><path d="M12 6v14"/></svg>Reading</button>
-      <button class="subj off" type="button" aria-disabled="true"><svg width="18" height="20" viewBox="0 0 20 22" fill="currentColor"><path d="M7 1h6v2h-1v5l6 10a2.5 2.5 0 0 1-2 4H4a2.5 2.5 0 0 1-2-4l6-10V3H7z" opacity=".7"/></svg>Science <span class="soon">SOON</span></button>
-    </div>
-  </div>
   <main class="hero">
     <div class="backdrop" id="backdrop"></div>
 
     <section class="view center" id="view-map">
+      <div class="subj-switch in-hero" role="group" aria-label="Subject"></div>
       <p class="eyebrow">Math · Round 1</p>
       <h1 id="h1"></h1>
       <p class="sub" id="sub"></p>
@@ -461,12 +507,18 @@ nav.main svg{width:22px;height:22px}
 
     <section class="view" id="view-progress" hidden>
       <div class="prog">
+        <div class="center"><div class="subj-switch in-hero" role="group" aria-label="Subject"></div></div>
         <div class="center"><h2 class="title" id="prog-title"></h2><p class="sub">Texas · Grade 3 Math</p></div>
         <div class="stats" id="stats"></div>
         <div class="topics" id="topics"></div>
       </div>
     </section>
   </main>
+</div>
+<div class="abc" id="abc" role="group" aria-label="Navigation prototype" hidden>
+  <span class="lbl">Nav</span>
+  <button type="button" data-nav="a" aria-pressed="false">A</button><button type="button" data-nav="b" aria-pressed="false">B</button><button type="button" data-nav="c" aria-pressed="false">C</button>
+  <small id="abc-note"></small>
 </div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -521,7 +573,7 @@ function backdrop(skin){
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const $=id=>document.getElementById(id);
 
-const state={skin:'islands',read:false,sound:true,size:'regular',calm:false,name:'',avatar:'sun'};
+const state={skin:'islands',read:false,sound:true,size:'regular',calm:false,name:'',avatar:'sun',nav:'a'};
 try{Object.assign(state,JSON.parse(localStorage.getItem('kh-settings')||'{}'))}catch(e){}
 if(!SKINS[state.skin])state.skin='islands';
 if(!AVATARS[state.avatar])state.avatar='sun';
@@ -633,7 +685,7 @@ function startOnboarding(at=0,fromApp=false){
   $('name').value=state.name; $('opt-read').checked=!!state.read; $('opt-sound').checked=!!state.sound; $('opt-calm').checked=!!state.calm;
   $('size-reg').setAttribute('aria-pressed',state.size!=='large'); $('size-lg').setAttribute('aria-pressed',state.size==='large');
   renderAvatars(); renderWorlds(); setObSkin();
-  $('app').hidden=true; $('onboard').hidden=false; window.scrollTo(0,0);
+  $('app').hidden=true; $('abc').hidden=true; $('onboard').hidden=false; window.scrollTo(0,0);
   showStep(at);
   if(fromApp){$('next').firstChild.textContent='Save ';$('back').hidden=true}
 }
@@ -684,6 +736,20 @@ function renderProgress(){
   $('stats').innerHTML=[[0,'Adventures finished'],[skills,'Stops finished'],[started,'Adventures started']].map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
   $('topics').innerHTML=TOPICS.map((t,i)=>{const n=stopsFor(t).length;return `<button class="trow" type="button" data-i="${i}"><b>${t.t}</b><span class="pill ${t.done?'go':''}">${t.done?'In progress':'Not started'}</span><div class="bar">${Array.from({length:n},(_,k)=>`<i class="${k<t.done?'done':''}"></i>`).join('')}</div><small>${t.done} of ${n} stops</small></button>`}).join('');
 }
+const NAV_NOTES={a:'One top bar',b:'Side rail',c:'Floating dock'};
+function setNav(n){
+  state.nav=NAV_NOTES[n]?n:'a'; save();
+  $('app').dataset.nav=state.nav;
+  document.querySelectorAll('#abc button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.nav===state.nav));
+  $('abc-note').textContent=NAV_NOTES[state.nav];
+  if(view==='path')requestAnimationFrame(drawLine);
+}
+document.querySelectorAll('.subj-switch').forEach(el=>el.innerHTML=$('subj-tpl').innerHTML);
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.subj-switch .subj'); if(!b||b.classList.contains('on'))return;
+  blip(500); toast(b.classList.contains('off')?'Science is coming soon!':'Prototype: only Math is built out.');
+});
+$('abc').addEventListener('click',e=>{const b=e.target.closest('button[data-nav]');if(!b)return;blip(620);setNav(b.dataset.nav)});
 function setView(v){
   view=v;
   ['map','path','progress'].forEach(k=>$('view-'+k).hidden=k!==v);
@@ -698,7 +764,8 @@ function enterApp(welcome){
   $('hdr-name').textContent=state.name.trim()||'Friend';
   const av=$('hdr-avatar'); av.style.background=AVATARS[state.avatar]; av.innerHTML=badge('#291454',30);
   applyHelpers();
-  $('onboard').hidden=true; $('app').hidden=false;
+  $('onboard').hidden=true; $('app').hidden=false; $('abc').hidden=false;
+  setNav(state.nav);
   setView(welcome?'map':view);
   if(welcome)toast(`Welcome to ${SKINS[state.skin].name}, ${state.name.trim()||'friend'}!`);
 }

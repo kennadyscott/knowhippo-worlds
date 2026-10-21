@@ -241,7 +241,7 @@ nav.main svg{width:22px;height:22px}
 [data-skin=nextgen] .bubble{border-radius:2px;border:1px solid rgba(61,220,90,.55)}
 
 /* adventure path */
-.path-top{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.path-top{position:relative;z-index:3;display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:28px}
 .back{border:0;background:var(--chip);color:var(--chip-ink);font-weight:800;font-size:.85rem;padding:8px 14px;border-radius:999px;margin-bottom:8px}
 .path-top .t{flex:1;min-width:0}
 .path-top h2.title{font-size:clamp(1.8rem,3.6vw,3rem);text-align:left;margin:0}
@@ -253,11 +253,11 @@ nav.main svg{width:22px;height:22px}
 .path-wrap{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px;align-items:start}
 .path-stops{position:relative;padding-bottom:20px}
 .path-line{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.pstop{position:relative;width:min(300px,40%);margin-top:-46px}
-.pstop:first-child{margin-top:0}
-.pstop .art{position:relative}
-.pstop .art img.scn{width:100%;display:block;filter:drop-shadow(0 14px 18px rgba(20,10,60,.25))}
-.pstop .me{position:absolute;left:50%;top:6%;transform:translateX(-50%);width:76px;height:76px;border-radius:50%;overflow:hidden;border:4px solid var(--badge);background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.35),0 10px 20px rgba(0,0,0,.25);animation:bob 2.6s ease-in-out infinite}
+.pstop{position:relative;width:clamp(200px,26%,270px);margin-top:-34px}
+.pstop:first-of-type{margin-top:0}
+.pstop .art{position:relative;height:190px;display:flex;align-items:flex-end;justify-content:center}
+.pstop .art img.scn{width:auto;max-width:100%;max-height:190px;display:block;filter:drop-shadow(0 14px 18px rgba(20,10,60,.25))}
+.pstop .me{position:absolute;left:50%;top:-14px;transform:translateX(-50%);width:76px;height:76px;border-radius:50%;overflow:hidden;border:4px solid var(--badge);background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.35),0 10px 20px rgba(0,0,0,.25);animation:bob 2.6s ease-in-out infinite}
 .pstop .me img{width:100%;height:170%;object-fit:cover;object-position:50% 0}
 .plabel{position:relative;z-index:2;margin:-26px auto 0;width:92%;background:var(--card);color:var(--card-ink);border:1px solid var(--card-line);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 12px;display:flex;align-items:center;gap:10px;text-align:left}
 .plabel b{display:block;font-family:var(--cfont);font-weight:800;font-size:1rem;line-height:1.15}
@@ -326,7 +326,8 @@ nav.main svg{width:22px;height:22px}
   .who-btn small,.who-btn b{display:none}
   .trow{grid-template-columns:minmax(0,1fr) auto}
   .trow .bar,.trow small{display:none}
-  .pstop{width:min(300px,62%)}
+  .pstop{width:min(280px,62%);margin-left:0!important}
+  .pstop:nth-of-type(even){margin-left:auto!important}
 }
 @media (max-width:560px){
   .panel{padding:22px 18px 18px;border-radius:22px}
@@ -339,7 +340,9 @@ nav.main svg{width:22px;height:22px}
   .buddy .hippo{width:100px}
   .bubble{font-size:1rem}
   .stats{grid-template-columns:1fr}
-  .pstop{width:78%}
+  .pstop{width:74%}
+  .pstop .art{height:160px}
+  .pstop .art img.scn{max-height:160px}
   .trail .st{width:28px;height:28px}
   .trail i{width:8px}
   nav.main button{padding:9px 12px;font-size:.92rem}
@@ -664,7 +667,7 @@ function renderMap(){
   $('bubble').innerHTML=S.buddy(nm());
   $('buddy-hippo').innerHTML=`<img src="img/hippo-${state.skin}.webp" alt="Hippo, your learning buddy">`;
 }
-const XS=['4%','36%','62%','34%','6%','38%','62%'];
+const XS=['2%','37%','72%','37%','2%','37%','72%'];
 function renderPath(){
   const t=TOPICS[openTopic], list=stopsFor(t), next=Math.min(t.done,list.length-1);
   $('path-title').textContent=t.t;

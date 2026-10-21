@@ -158,7 +158,7 @@ nav.main svg{width:22px;height:22px}
 [data-skin=nextgen] .subj{border-radius:2px}
 
 /* One navigation, three ways (A/B/C prototype control). Subjects live in a compact switcher. */
-.subj-switch{display:inline-flex;gap:4px;background:var(--tabs);padding:4px;border-radius:18px;border:1px solid var(--hdr-line)}
+.subj-switch{display:inline-flex;max-width:100%;overflow-x:auto;gap:4px;background:var(--tabs);padding:4px;border-radius:18px;border:1px solid var(--hdr-line)}
 .subj-switch .subj{padding:8px 18px;font-size:.95rem;border-radius:14px}
 .subj-switch .subj svg{width:18px;height:18px}
 .subj-switch.in-hero{margin:0 auto 14px;background:var(--chip);border-color:transparent;box-shadow:0 4px 14px rgba(0,0,0,.12)}
@@ -362,7 +362,8 @@ nav.main svg{width:22px;height:22px}
   .worlds{grid-template-columns:repeat(2,minmax(0,1fr))}
   .world .thumb{height:92px}
   .stops{grid-template-columns:1fr;gap:24px}
-  .subj-switch .subj{padding:7px 12px;font-size:.88rem}
+  .subj-switch .subj{padding:7px 10px;font-size:.84rem;gap:6px}
+  .subj-switch .subj .soon{display:none}
   #app[data-nav=a] nav.main button{font-size:0;gap:0;padding:10px}
   #app[data-nav=b] header.top{top:auto;right:0;width:auto;height:auto;border-right:0;border-top:1px solid var(--hdr-line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
   #app[data-nav=b] .top-in{flex-direction:row;height:auto}

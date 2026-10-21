@@ -283,6 +283,40 @@ nav.main svg{width:22px;height:22px}
 [data-skin=notebook] .btn-continue{background:#22306e;color:#fff;border-radius:6px}
 [data-skin=habitats] .btn-continue{background:#2f7a4a;color:#fff}
 
+/* themed skill boards: the path plays out inside the world (run the bases, hop the lily pads...) */
+.path-goal{margin:6px 0 0;font-weight:700;font-size:1.05rem;color:var(--muted)}
+.path-goal:empty{display:none}
+.board{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:24px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.3);border:3px solid var(--card-line);background:#111}
+[data-skin=gaming] .board{border-radius:0}
+[data-skin=nextgen] .board{border-radius:4px}
+.board > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.board svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.bstop{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;z-index:2}
+.tok{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1rem;background:rgba(15,15,30,.72);color:#fff;border:3px solid rgba(255,255,255,.85);box-shadow:0 6px 14px rgba(0,0,0,.35)}
+.bstop.done .tok{background:var(--fill);color:var(--badge-ink);border-color:#fff}
+.bstop.next .tok{width:68px;height:68px;padding:0;overflow:hidden;background:#fff;border:4px solid var(--badge);box-shadow:0 0 0 6px rgba(255,255,255,.35),0 10px 22px rgba(0,0,0,.4);animation:bob 2.4s ease-in-out infinite}
+.bstop.next .tok img{width:100%;height:170%;object-fit:cover;object-position:50% 0}
+.blabel{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--card);color:var(--card-ink);border:1px solid var(--card-line);border-radius:10px;padding:5px 9px;text-align:center;white-space:nowrap;box-shadow:0 6px 14px rgba(0,0,0,.25);line-height:1.15}
+.blabel b{display:block;font-weight:800;font-size:.8rem}
+.blabel small{display:block;font-size:.66rem;font-weight:700;color:var(--card-muted)}
+.bstop.edge-l .blabel{left:0;transform:none}
+.bstop.edge-r .blabel{left:auto;right:0;transform:none}
+.bstop.next .blabel{outline:3px solid var(--badge);outline-offset:1px}
+[data-skin=gaming] .blabel,[data-skin=gaming] .tok{border-radius:0}
+[data-skin=gaming] .blabel b{font-family:'Press Start 2P',monospace;font-weight:400;font-size:.5rem;line-height:1.6}
+[data-skin=sports] .blabel b{font-family:'Bungee',sans-serif;font-weight:400;font-size:.72rem}
+[data-skin=nextgen] .blabel{border-radius:2px}
+[data-skin=nextgen] .blabel b{font-family:'Rajdhani',sans-serif;font-size:.95rem;text-transform:uppercase}
+.slist{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:16px}
+.srow{display:flex;align-items:center;gap:10px;background:var(--card);color:var(--card-ink);border:1px solid var(--card-line);border-radius:14px;padding:9px 12px;box-shadow:var(--shadow)}
+.srow .num{width:30px;height:30px;font-size:.85rem}
+.srow b{display:block;font-weight:800;font-size:.9rem;line-height:1.15}
+[data-skin=sports] .srow b{font-family:'Bungee',sans-serif;font-weight:400;font-size:.75rem}
+[data-skin=gaming] .srow b{font-family:'Press Start 2P',monospace;font-weight:400;font-size:.5rem;line-height:1.6}
+.srow small{font-size:.75rem;font-weight:700;color:var(--card-muted)}
+.srow.ahead{opacity:.75}
+.srow.next{outline:3px solid var(--badge);outline-offset:1px}
+
 /* progress */
 .prog{max-width:1000px;margin:0 auto}
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px auto 18px;max-width:760px}
@@ -341,6 +375,10 @@ nav.main svg{width:22px;height:22px}
   .bubble{font-size:1rem}
   .stats{grid-template-columns:1fr}
   .pstop{width:74%}
+  .blabel{display:none}
+  .bstop.next .blabel{display:block}
+  .tok{width:32px;height:32px;font-size:.8rem;border-width:2px}
+  .bstop.next .tok{width:50px;height:50px}
   .pstop .art{height:160px}
   .pstop .art img.scn{max-height:160px}
   .trail .st{width:28px;height:28px}
@@ -463,7 +501,7 @@ nav.main svg{width:22px;height:22px}
 
     <section class="view" id="view-path" hidden>
       <div class="path-top">
-        <div class="t"><button class="back" id="path-back" type="button">‹ My adventures</button><h2 class="title" id="path-title"></h2></div>
+        <div class="t"><button class="back" id="path-back" type="button">‹ My adventures</button><h2 class="title" id="path-title"></h2><p class="path-goal" id="path-goal"></p></div>
         <div class="dots" id="path-dots"></div>
       </div>
       <div class="path-wrap">
@@ -667,24 +705,51 @@ function renderMap(){
   $('bubble').innerHTML=S.buddy(nm());
   $('buddy-hippo').innerHTML=`<img src="img/hippo-${state.skin}.webp" alt="Hippo, your learning buddy">`;
 }
+const BOARDS={
+  baseball:{img:'board-baseball',goal:'Run the bases and score a home run!',pts:[[13,66],[36,88],[43,79],[75,47],[50,29],[25,47],[57,79]],names:['Dugout','On-deck circle','Batter’s box','1st base','2nd base','3rd base','Home run!']},
+  basketball:{img:'board-basketball',goal:'Work the court and sink the buzzer beater!',pts:[[37,84],[50,42],[27,44],[11,30],[12,68],[66,62],[88,28]],names:['Team bench','Tip-off','Free-throw line','Layup lane','Corner shot','Three-point arc','Buzzer beater!']},
+  soccer:{img:'board-soccer',goal:'Dribble up the field and score!',pts:[[19,69],[18,42],[50,42],[70,18],[72,70],[82,42],[94,40]],names:['Warm-up','Shooting drills','Midfield','Wing run','Past the defense','Penalty spot','GOAL!']},
+  track:{img:'board-track',goal:'Run one lap to the finish line!',pts:[[25,80],[8,52],[22,22],[52,15],[82,22],[94,52],[86,76]],names:['Starting blocks','First curve','Back stretch','Hurdles','Far turn','Final curve','Finish line!']},
+  retro:{img:'board-retro',goal:'Clear the level and reach the castle!',pts:[[8,46],[28,37],[44,47],[57,38],[71,47],[82,51],[92,38]],names:['Start hut','Warp pipe','River bridge','Crystal cave','Mushroom shop','Coin road','Castle flag!']},
+  nextgen:{img:'board-nextgen',goal:'Clear every node to reach the podium.',pts:[[8,43],[21,55],[35,40],[48,47],[60,54],[76,46],[89,32]],names:['Launch pad','Training sim','Data node','Signal relay','Power core','Final sector','Victory podium']},
+  habitats:{img:'board-habitats',goal:'Follow the trail all the way to the arctic lookout!',pts:[[10,60],[18,37],[42,30],[51,53],[65,63],[76,44],[91,20]],names:['Base camp','Ranger station','Rainforest falls','River crossing','Coral beach','Desert canyon','Arctic lookout!']},
+  bog:{img:'board-bog',goal:'Hop across the lily pads to the toadstool house!',pts:[[8,56],[18,66],[31,65],[45,61],[57,57],[77,44],[90,25]],names:['Mossy bank','First lily pad','Splash pad','Froggy pad','Willow pad','Firefly pad','Toadstool house!']}
+};
+function boardFor(skin,ti){
+  if(skin==='sports')return BOARDS[['baseball','basketball','soccer','track'][ti]];
+  return {gaming:BOARDS.retro,nextgen:BOARDS.nextgen,habitats:BOARDS.habitats,bog:BOARDS.bog}[skin]||null;
+}
 const XS=['2%','37%','72%','37%','2%','37%','72%'];
 function renderPath(){
   const t=TOPICS[openTopic], list=stopsFor(t), next=Math.min(t.done,list.length-1);
   $('path-title').textContent=t.t;
   $('path-dots').innerHTML=`${t.done} of ${list.length} stops finished<div class="row">${list.map((_,i)=>`<span class="${i<t.done?'done':i===next?'on':''}">${i<t.done?'✓':i+1}</span>`).join('')}</div>`;
-  $('path-stops').innerHTML='<svg class="path-line" id="path-line" aria-hidden="true"></svg>'+list.map((name,i)=>{
+  const S=SKINS[state.skin], bd=boardFor(state.skin,openTopic);
+  $('path-goal').textContent=bd?bd.goal:'';
+  $('path-stops').classList.toggle('is-board',!!bd);
+  if(bd){
+    const stat=i=>i<t.done?'done':i===next?'next':'ahead';
+    const sLabel=i=>({done:'Finished',next:'Up next',ahead:'Ahead'})[stat(i)];
+    const tok=i=>stat(i)==='next'?`<img src="img/hippo-${state.skin}.webp" alt="You are here">`:stat(i)==='done'?'✓':i+1;
+    const done=bd.pts.slice(0,next+1).map(p=>p.join(',')).join(' '), all=bd.pts.map(p=>p.join(',')).join(' ');
+    $('path-stops').innerHTML=`<div class="board"><img src="img/${bd.img}.webp" alt="${S.places?S.places[openTopic]:''} skill board">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="${all}" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 12" opacity=".75" vector-effect="non-scaling-stroke"/><polyline points="${done}" fill="none" style="stroke:var(--fill)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
+      ${bd.pts.map(([x,y],i)=>`<div class="bstop ${stat(i)} ${x<12?'edge-l':x>88?'edge-r':''}" style="left:${x}%;top:${y}%"><span class="tok">${tok(i)}</span><span class="blabel"><b>${bd.names[i]}</b><small>${sLabel(i)}</small></span></div>`).join('')}
+    </div>
+    <div class="slist">${list.map((name,i)=>`<div class="srow ${stat(i)}"><span class="num">${stat(i)==='done'?'✓':i+1}</span><span><b>${bd.names[i]}</b><small>${name}</small></span></div>`).join('')}</div>`;
+  }else $('path-stops').innerHTML='<svg class="path-line" id="path-line" aria-hidden="true"></svg>'+list.map((name,i)=>{
     const st=i<t.done?'done':i===next?'next':'ahead';
     const label=st==='done'?'Finished':st==='next'?'Up next':'Ahead on your path';
     const num=st==='done'?'✓':i+1;
     return `<div class="pstop ${st}" style="margin-left:${XS[i%XS.length]}"><div class="art"><img class="scn" src="img/${state.skin}-${(i+openTopic)%4}.webp" alt="">${st==='next'?`<span class="me"><img src="img/hippo-${state.skin}.webp" alt="You are here"></span>`:''}</div><div class="plabel"><span class="num">${num}</span><span><b>${name}</b><small>${label}</small></span>${st==='done'?'<span class="pct">12.5%</span>':''}</div></div>`;
   }).join('');
-  const cur=list[next];
-  $('path-panel').innerHTML=`<p class="eyebrow">Up next</p><h3>${cur}</h3><p>${next===0?'A quick check to see what you already know.':next===list.length-1?'Show Hippo how much you’ve grown.':'8 questions'}</p><button class="btn-continue" type="button" id="continue">${t.done?'Continue adventure':'Start adventure'} →</button>`;
+  const cur=list[next], what=next===0?'A quick check to see what you already know.':next===list.length-1?'Show Hippo how much you’ve grown.':'8 questions';
+  $('path-panel').innerHTML=`<p class="eyebrow">Up next</p><h3>${bd?bd.names[next]:cur}</h3><p>${bd?`${cur} · ${what}`:what}</p><button class="btn-continue" type="button" id="continue">${t.done?'Continue adventure':'Start adventure'} →</button>`;
   $('continue').onclick=()=>{blip(880);toast(`Prototype: this opens “${cur}”.`)};
   requestAnimationFrame(drawLine);
 }
 function drawLine(){
-  const box=$('path-stops'), svg=$('path-line'); if(!box||!svg||$('view-path').hidden)return;
+  const box=$('path-stops'), svg=$('path-line'); if(!box||!svg||$('view-path').hidden||box.classList.contains('is-board'))return;
   const b=box.getBoundingClientRect();
   const pts=[...box.querySelectorAll('.pstop .art')].map(a=>{const r=a.getBoundingClientRect();return [(r.left+r.width/2-b.left).toFixed(0),(r.top+r.height*.55-b.top).toFixed(0)]});
   const col=getComputedStyle($('app')).getPropertyValue('--badge').trim()||'#fff';

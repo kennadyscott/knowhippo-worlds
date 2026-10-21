@@ -3,28 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="KnowHippo prototype: students pick a world and learning helpers, then see their learning targets re-skinned.">
+<meta name="description" content="KnowHippo prototype: a kid-friendly sign-in where students pick a world, then explore their learning targets in it.">
 <title>KnowHippo Worlds</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Press+Start+2P&family=Patrick+Hand&family=Bungee&family=Rajdhani:wght@600;700&display=swap">
 <style>
-/* Layout: onboarding screen (pick a world + helpers, with live preview) -> learning-target map that re-skins per world.
-   Each world commits to its own look, so colors are set per [data-skin] rather than light/dark. */
+/* Layout: kid sign-in wizard (sign in -> name -> world -> helpers -> ready) over the chosen world's art,
+   then the KnowHippo student app (learning map, adventure path, progress) re-skinned per world.
+   Each world commits to its own look, so colors are set per [data-skin] rather than light/dark.
+   Type: Manrope, matching the New Student Studio. */
 :root{
-  --brand:#5b2fd6; --brand-ink:#22124f; --brand-soft:#efe9ff; --line:#e3dcf5; --paper:#faf8ff;
+  --brand:#6d3ee8; --brand-2:#8047fa; --brand-ink:#291454; --brand-soft:#eee7ff; --line:#e7e2f0; --paper:#faf9fd; --teal:#20d9c5;
   --display:'Manrope',system-ui,sans-serif; --body:'Manrope',system-ui,sans-serif;
   color-scheme:light;
 }
-[data-skin=islands]{--sky:linear-gradient(180deg,#9db3f3 0%,#c9c3f6 45%,#f3def3 100%);--ink:#24175a;--muted:#544c86;--card:#fff;--card-ink:#24175a;--card-muted:#6b6490;--badge:#6d3ee8;--badge-ink:#fff;--track:#ebe6f7;--fill:#14b394;--radius:22px;--card-line:rgba(255,255,255,.9);--shadow:0 12px 30px rgba(76,46,160,.18);--hfont:'Manrope',system-ui,sans-serif;--cfont:'Manrope',system-ui,sans-serif;--hdr:#fff;--hdr-ink:#24175a;--hdr-line:#ece7f8;--tabs:#efeafc;--tab:#fff;--tab-on:#6d3ee8;--tab-on-ink:#fff;--dot:#14b394;--bubble:#fff;--bubble-ink:#24175a;--chip:rgba(255,255,255,.85);--chip-ink:#24175a}
+[data-skin]{--nav-on-bg:var(--tabs);--nav-on:var(--hdr-ink)}
+[data-skin=islands]{--sky:linear-gradient(180deg,#9db3f3 0%,#c9c3f6 45%,#f3def3 100%);--ink:#291454;--muted:#5d5487;--card:#fff;--card-ink:#291454;--card-muted:#6b6490;--badge:#7640e9;--badge-ink:#fff;--track:#ebe6f7;--fill:#14b394;--radius:16px;--card-line:rgba(255,255,255,.9);--shadow:0 12px 30px rgba(76,46,160,.18);--hfont:'Manrope',system-ui,sans-serif;--cfont:'Manrope',system-ui,sans-serif;--hdr:#fff;--hdr-ink:#291454;--hdr-line:#ece7f8;--tabs:#efeafc;--tab:#fff;--tab-on:linear-gradient(120deg,#8047fa,#6634ec);--tab-on-ink:#fff;--dot:#14b8a6;--bubble:#fff;--bubble-ink:#291454;--chip:rgba(255,255,255,.85);--chip-ink:#291454;--nav-on-bg:#eee7ff;--nav-on:#5020c5}
 [data-skin=sports]{--sky:linear-gradient(180deg,#0d1b3d 0%,#1b3466 46%,#2a6d3a 46.2%,#235f31 100%);--ink:#fff;--muted:#c8d6f2;--card:#0f1f45;--card-ink:#fff;--card-muted:#a9bbe0;--badge:#ffc928;--badge-ink:#0f1f45;--track:#24386a;--fill:#ffc928;--radius:10px;--card-line:#ffc928;--shadow:0 12px 26px rgba(0,0,0,.35);--hfont:'Bungee',system-ui,sans-serif;--cfont:'Bungee',system-ui,sans-serif;--hdr:#0a1530;--hdr-ink:#fff;--hdr-line:#1f2f5a;--tabs:#0d1b3d;--tab:#16295a;--tab-on:#e5322d;--tab-on-ink:#fff;--dot:#ffc928;--bubble:#fff;--bubble-ink:#0f1f45;--chip:rgba(10,21,48,.8);--chip-ink:#fff}
 [data-skin=gaming]{--sky:radial-gradient(ellipse at 50% 120%,#ff3fa4 0%,rgba(255,63,164,0) 45%),linear-gradient(180deg,#0b0723 0%,#1d0f4a 60%,#2b0f57 100%);--ink:#fff;--muted:#b9aef5;--card:#130b33;--card-ink:#fff;--card-muted:#a99ee6;--badge:#2ef2c4;--badge-ink:#130b33;--track:#2b2060;--fill:#2ef2c4;--radius:0px;--card-line:#2ef2c4;--shadow:6px 6px 0 #ff3fa4;--hfont:'Press Start 2P',monospace;--cfont:'Press Start 2P',monospace;--hdr:#0b0723;--hdr-ink:#fff;--hdr-line:#2b2060;--tabs:#120a30;--tab:#1d1250;--tab-on:#ff3fa4;--tab-on-ink:#fff;--dot:#2ef2c4;--bubble:#130b33;--bubble-ink:#fff;--chip:rgba(19,11,51,.85);--chip-ink:#fff}
-[data-skin=nextgen]{--sky:linear-gradient(180deg,#0b0d10 0%,#14181d 60%,#0f1a12 100%);--ink:#f2f5f3;--muted:#9fb0a6;--card:rgba(20,24,29,.88);--card-ink:#f2f5f3;--card-muted:#9fb0a6;--badge:#3ddc5a;--badge-ink:#07130a;--track:#2a3138;--fill:#3ddc5a;--radius:2px;--card-line:rgba(61,220,90,.55);--shadow:0 16px 40px rgba(0,0,0,.5),0 0 24px rgba(61,220,90,.08);--hfont:'Rajdhani','Manrope',system-ui,sans-serif;--cfont:'Rajdhani','Manrope',system-ui,sans-serif;--hdr:#0b0d10;--hdr-ink:#f2f5f3;--hdr-line:#22282e;--tabs:#111418;--tab:#1a1f24;--tab-on:#3ddc5a;--tab-on-ink:#07130a;--dot:#3ddc5a;--bubble:#14181d;--bubble-ink:#f2f5f3;--chip:rgba(20,24,29,.85);--chip-ink:#f2f5f3}
-[data-skin=habitats]{--sky:linear-gradient(180deg,#e9f2e1 0%,#d6ead6 55%,#c6dfc9 100%);--ink:#1f3b2a;--muted:#4c6a55;--card:#fffaf0;--card-ink:#1f3b2a;--card-muted:#6a7d6c;--badge:#2f7a4a;--badge-ink:#fff;--track:#e6e0cf;--fill:#e0912f;--radius:14px;--card-line:#e2d8bf;--shadow:0 10px 24px rgba(31,59,42,.15);--hfont:'Manrope',system-ui,sans-serif;--cfont:'Manrope',system-ui,sans-serif;--hdr:#fffaf0;--hdr-ink:#1f3b2a;--hdr-line:#e8dfc7;--tabs:#f1ead6;--tab:#fffaf0;--tab-on:#2f7a4a;--tab-on-ink:#fff;--dot:#e0912f;--bubble:#fffaf0;--bubble-ink:#1f3b2a;--chip:rgba(255,250,240,.9);--chip-ink:#1f3b2a}
-[data-skin=bog]{--sky:radial-gradient(ellipse at 50% 100%,#3f6b45 0%,rgba(63,107,69,0) 60%),linear-gradient(180deg,#0f2622 0%,#173a33 55%,#22493a 100%);--ink:#eaffd8;--muted:#a8cfa7;--card:rgba(20,52,45,.92);--card-ink:#eaffd8;--card-muted:#a8cfa7;--badge:#b8f05a;--badge-ink:#143029;--track:#2a5a4b;--fill:#f4e65c;--radius:28px;--card-line:rgba(184,240,90,.45);--shadow:0 0 0 1px rgba(184,240,90,.15),0 14px 34px rgba(0,0,0,.35),0 0 26px rgba(244,230,92,.12);--hfont:'Manrope',system-ui,sans-serif;--cfont:'Manrope',system-ui,sans-serif;--hdr:#0d211d;--hdr-ink:#eaffd8;--hdr-line:#1d3f37;--tabs:#102a25;--tab:#16362f;--tab-on:#b8f05a;--tab-on-ink:#143029;--dot:#f4e65c;--bubble:#eaffd8;--bubble-ink:#143029;--chip:rgba(13,33,29,.85);--chip-ink:#eaffd8}
+[data-skin=nextgen]{--sky:linear-gradient(180deg,#0b0d10 0%,#14181d 60%,#0f1a12 100%);--ink:#f2f5f3;--muted:#9fb0a6;--card:rgba(20,24,29,.9);--card-ink:#f2f5f3;--card-muted:#9fb0a6;--badge:#3ddc5a;--badge-ink:#07130a;--track:#2a3138;--fill:#3ddc5a;--radius:2px;--card-line:rgba(61,220,90,.55);--shadow:0 16px 40px rgba(0,0,0,.5),0 0 24px rgba(61,220,90,.08);--hfont:'Rajdhani','Manrope',system-ui,sans-serif;--cfont:'Rajdhani','Manrope',system-ui,sans-serif;--hdr:#0b0d10;--hdr-ink:#f2f5f3;--hdr-line:#22282e;--tabs:#111418;--tab:#1a1f24;--tab-on:#3ddc5a;--tab-on-ink:#07130a;--dot:#3ddc5a;--bubble:#14181d;--bubble-ink:#f2f5f3;--chip:rgba(20,24,29,.85);--chip-ink:#f2f5f3;--nav-on:#3ddc5a}
+[data-skin=habitats]{--sky:linear-gradient(180deg,#e9f2e1 0%,#d6ead6 55%,#c6dfc9 100%);--ink:#1f3b2a;--muted:#4c6a55;--card:#fffaf0;--card-ink:#1f3b2a;--card-muted:#6a7d6c;--badge:#2f7a4a;--badge-ink:#fff;--track:#e6e0cf;--fill:#e0912f;--radius:14px;--card-line:#e2d8bf;--shadow:0 10px 24px rgba(31,59,42,.15);--hfont:'Manrope',system-ui,sans-serif;--cfont:'Manrope',system-ui,sans-serif;--hdr:#fffaf0;--hdr-ink:#1f3b2a;--hdr-line:#e8dfc7;--tabs:#f1ead6;--tab:#fffaf0;--tab-on:#2f7a4a;--tab-on-ink:#fff;--dot:#e0912f;--bubble:#fffaf0;--bubble-ink:#1f3b2a;--chip:rgba(255,250,240,.9);--chip-ink:#1f3b2a;--nav-on:#2f7a4a}
+[data-skin=bog]{--sky:radial-gradient(ellipse at 50% 100%,#3f6b45 0%,rgba(63,107,69,0) 60%),linear-gradient(180deg,#0f2622 0%,#173a33 55%,#22493a 100%);--ink:#eaffd8;--muted:#a8cfa7;--card:rgba(20,52,45,.94);--card-ink:#eaffd8;--card-muted:#a8cfa7;--badge:#b8f05a;--badge-ink:#143029;--track:#2a5a4b;--fill:#f4e65c;--radius:24px;--card-line:rgba(184,240,90,.45);--shadow:0 0 0 1px rgba(184,240,90,.15),0 14px 34px rgba(0,0,0,.35),0 0 26px rgba(244,230,92,.12);--hfont:'Manrope',system-ui,sans-serif;--cfont:'Manrope',system-ui,sans-serif;--hdr:#0d211d;--hdr-ink:#eaffd8;--hdr-line:#1d3f37;--tabs:#102a25;--tab:#16362f;--tab-on:#b8f05a;--tab-on-ink:#143029;--dot:#f4e65c;--bubble:#eaffd8;--bubble-ink:#143029;--chip:rgba(13,33,29,.85);--chip-ink:#eaffd8;--nav-on:#b8f05a}
 [data-skin=notebook]{--sky:linear-gradient(90deg,transparent 0 63px,#f2a3a3 63px 65px,transparent 65px),repeating-linear-gradient(180deg,#fffef8 0 31px,#cfe0f3 31px 32px);--ink:#22306e;--muted:#4f5b8f;--card:#fff;--card-ink:#22306e;--card-muted:#5b6596;--badge:#fff;--badge-ink:#22306e;--track:#e6e9f3;--fill:#22306e;--radius:4px;--card-line:#22306e;--shadow:3px 4px 0 rgba(34,48,110,.12);--hfont:'Patrick Hand','Manrope',cursive;--cfont:'Patrick Hand','Manrope',cursive;--hdr:#fffef8;--hdr-ink:#22306e;--hdr-line:#dfe4ef;--tabs:#fffef8;--tab:#fff;--tab-on:#22306e;--tab-on-ink:#fff;--dot:#22306e;--bubble:#fff;--bubble-ink:#22306e;--chip:#fff;--chip-ink:#22306e}
 
-/* Generated world art + a soft veil so the headline stays readable over it */
-[data-skin=islands]{--art:url(img/bg-islands.webp);--veil:rgba(246,240,255,.55)}
+/* Generated world art + a soft veil so headlines stay readable over it */
+[data-skin=islands]{--art:url(img/bg-islands.webp);--veil:rgba(246,240,255,.6)}
 [data-skin=sports]{--art:url(img/bg-sports.webp);--veil:rgba(8,16,40,.55)}
 [data-skin=gaming]{--art:url(img/bg-gaming.webp);--veil:rgba(11,7,35,.55)}
 [data-skin=nextgen]{--art:url(img/bg-nextgen.webp);--veil:rgba(8,10,12,.55)}
@@ -37,282 +40,415 @@ html{font-size:100%}
 html.large{font-size:115%}
 body{margin:0;font-family:var(--body);background:var(--paper);color:var(--brand-ink);-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;cursor:pointer}
-button:focus-visible,[tabindex]:focus-visible,input:focus-visible+span{outline:3px solid #ffb020;outline-offset:3px}
+button:disabled{cursor:not-allowed}
+button:focus-visible,a:focus-visible,input:focus-visible,input:focus-visible+span{outline:3px solid #ffb020;outline-offset:3px}
 .calm *,.calm *::before,.calm *::after{animation:none!important;transition:none!important}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.wordmark{font-family:var(--display);font-weight:800;font-size:1.55rem;letter-spacing:-.035em}
+.logo{display:flex;align-items:center;gap:8px}
+.logo .mark{display:block;width:44px}
+.say{border:0;background:var(--brand-soft);color:var(--brand);width:40px;height:40px;border-radius:12px;display:inline-grid;place-items:center;flex:none}
+.say:hover{background:#e2d8ff}
 
-/* Type matches the New Student Studio: Manrope, set heavier for headings */
-.wordmark,.ob h1,.hero h1{font-weight:800;letter-spacing:-.025em}
-.ob h2,.world b,.helper .txt b,.btn-go,.subj,nav.main a,.who b,.pv .pv-bar{font-weight:700}
-.card h4,.pv h3{font-weight:800;letter-spacing:-.01em}
-.num{font-weight:800}
-
-/* ---------- Onboarding ---------- */
-#onboard{min-height:100vh;background:radial-gradient(circle at 12% 0%,#e6dcff 0,transparent 40%),radial-gradient(circle at 100% 100%,#ffe6f4 0,transparent 40%),var(--paper);padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.ob-wrap{max-width:1220px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:36px;align-items:start}
-.ob-brand{display:flex;align-items:center;gap:10px;margin-bottom:22px}
-.wordmark{font-family:var(--display);font-weight:700;font-size:1.6rem;letter-spacing:-.02em;color:var(--brand-ink)}
-.steps{display:flex;gap:8px;align-items:center;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7a6fa6;margin-bottom:10px}
-.steps i{display:inline-block;width:28px;height:6px;border-radius:6px;background:var(--line)}
-.steps i.on{background:var(--brand)}
-.ob h1{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 8px;text-wrap:balance}
-.ob .lede{font-size:1.1rem;color:#5d5487;margin:0 0 28px;max-width:52ch}
-.ob h2{font-family:var(--display);font-weight:600;font-size:1.3rem;margin:0 0 4px}
-.ob .hint{margin:0 0 14px;color:#6b6490;font-size:.95rem}
-.worlds{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:34px}
-.world{position:relative;text-align:left;background:#fff;border:2px solid var(--line);border-radius:18px;padding:8px 8px 12px;display:flex;flex-direction:column;gap:8px;transition:transform .15s,border-color .15s,box-shadow .15s}
-.world:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(76,46,160,.12)}
-.world[aria-checked=true]{border-color:var(--brand);box-shadow:0 0 0 4px rgba(91,47,214,.15)}
-.world .thumb{height:130px;border-radius:12px;overflow:hidden;background:var(--art) center/cover no-repeat,var(--sky);display:grid;place-items:center;position:relative}
-.world .thumb img{width:auto;max-width:86%;max-height:116px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
-.world .thumb[data-skin=notebook] img{filter:none;max-height:96px}
-.world b{font-family:var(--display);font-weight:600;font-size:1.08rem;padding:0 6px}
-.world small{color:#6b6490;font-size:.85rem;padding:0 6px;line-height:1.3}
-.world .tag{position:absolute;top:14px;left:14px;font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:#fff;color:var(--brand);padding:3px 8px;border-radius:999px}
-.world .check{position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:none;place-items:center}
+/* ---------- Sign-in wizard ---------- */
+#onboard{min-height:100vh;position:relative;overflow:hidden;background:var(--art) center/cover no-repeat,var(--sky);padding-block:20px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));transition:background .4s}
+#onboard::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 40%);pointer-events:none}
+.ob-top{position:relative;max-width:1180px;margin:0 auto 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ob-top .logo{background:#fff;border-radius:16px;padding:6px 14px 6px 8px;box-shadow:0 6px 18px rgba(41,20,84,.12);color:var(--brand-ink)}
+.trail{margin-left:auto;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.92);border-radius:999px;padding:6px 8px;box-shadow:0 6px 18px rgba(41,20,84,.12)}
+.trail .st{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.85rem;background:#efeafc;color:#8a80b5;transition:background .2s,color .2s,transform .2s}
+.trail .st.done{background:#14b394;color:#fff}
+.trail .st.on{background:var(--brand);color:#fff;transform:scale(1.12)}
+.trail i{width:16px;height:3px;border-radius:3px;background:#e2dcf3}
+.trail i.done{background:#14b394}
+.stage{position:relative;max-width:1180px;margin:0 auto;display:flex;align-items:flex-end;gap:10px}
+.buddy-ob{flex:none;width:210px;align-self:flex-end;position:relative;margin-bottom:-6px}
+.buddy-ob img{width:100%;display:block;filter:drop-shadow(0 16px 20px rgba(20,10,60,.3));animation:wave 3.2s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes wave{50%{transform:rotate(-3deg) translateY(-6px)}}
+.buddy-ob .talk{position:absolute;left:24px;right:-30px;top:-74px;background:#fff;color:var(--brand-ink);border-radius:20px;padding:12px 16px;font-weight:700;font-size:1rem;line-height:1.3;box-shadow:0 10px 24px rgba(41,20,84,.16)}
+.buddy-ob .talk::after{content:"";position:absolute;left:40px;bottom:-10px;border:10px solid transparent;border-top-color:#fff;border-bottom:0}
+.panel{flex:1;min-width:0;background:#fff;border-radius:28px;box-shadow:0 24px 60px rgba(41,20,84,.22);padding:30px 34px 26px;position:relative;animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:translateY(14px) scale(.98);opacity:.4}}
+.step[hidden]{display:none}
+.q{display:flex;align-items:center;gap:12px;margin:0 0 6px}
+.q h1{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:1.08;letter-spacing:-.03em;margin:0;text-wrap:balance}
+.panel .lede{font-size:1.08rem;color:#5d5487;margin:0 0 22px;max-width:56ch}
+.panel h2{font-family:var(--display);font-weight:800;font-size:1.05rem;margin:0 0 10px;letter-spacing:-.01em}
+.panel .hint{font-size:.88rem;color:#7a6fa6;margin:6px 0 0}
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.big-input{font:inherit;font-size:1.6rem;font-weight:800;letter-spacing:.02em;color:var(--brand-ink);border:3px solid var(--line);border-radius:18px;padding:14px 18px;width:100%;max-width:420px;background:#fbfaff;transition:border-color .15s}
+.big-input:focus{border-color:var(--brand);outline:none;background:#fff}
+.code-input{text-transform:uppercase;letter-spacing:.18em}
+.pics{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:10px;max-width:640px}
+.pic{border:3px solid var(--line);background:#fbfaff;border-radius:16px;aspect-ratio:1;display:grid;place-items:center;padding:6px;transition:transform .12s,border-color .12s}
+.pic:hover{transform:translateY(-2px)}
+.pic svg{width:100%;height:auto;max-width:44px}
+.pic[aria-pressed=true]{border-color:var(--brand);background:var(--brand-soft)}
+.slots{display:flex;gap:10px;margin-top:12px;align-items:center}
+.slot{width:58px;height:58px;border-radius:16px;border:3px dashed #d6cdef;display:grid;place-items:center;background:#fff}
+.slot.full{border-style:solid;border-color:var(--brand);background:var(--brand-soft);animation:pop .25s}
+.slot svg{width:36px}
+.clear{border:0;background:none;color:var(--brand);font-weight:800;font-size:.9rem;padding:6px 8px;margin-left:6px}
+.avatars{display:flex;gap:12px;flex-wrap:wrap}
+.av{border:3px solid transparent;background:none;padding:4px;border-radius:18px;transition:transform .12s}
+.av:hover{transform:translateY(-2px)}
+.av[aria-checked=true]{border-color:var(--brand)}
+.av span{display:grid;place-items:center;width:58px;height:58px;border-radius:14px}
+.worlds{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.world{position:relative;text-align:left;background:#fff;border:3px solid var(--line);border-radius:18px;padding:6px 6px 10px;display:flex;flex-direction:column;gap:6px;transition:transform .15s,border-color .15s,box-shadow .15s}
+.world:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(76,46,160,.14)}
+.world[aria-checked=true]{border-color:var(--brand);box-shadow:0 0 0 4px rgba(109,62,232,.18)}
+.world .thumb{height:112px;border-radius:12px;overflow:hidden;background:var(--art) center/cover no-repeat,var(--sky);display:grid;place-items:center}
+.world .thumb img{max-width:88%;max-height:100px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+.world .thumb[data-skin=notebook] img{filter:none;max-height:84px}
+.world b{font-weight:800;font-size:1rem;padding:0 6px}
+.world small{color:#6b6490;font-size:.8rem;padding:0 6px;line-height:1.3}
+.world .tag{position:absolute;top:12px;left:12px;font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:#fff;color:var(--brand);padding:3px 8px;border-radius:999px}
+.world .check{position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:none;place-items:center}
 .world[aria-checked=true] .check{display:grid}
-.helpers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:28px}
-.helper{display:flex;gap:12px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px 16px}
-.helper .ic{flex:none;width:40px;height:40px;border-radius:12px;background:var(--brand-soft);display:grid;place-items:center;color:var(--brand)}
+.helpers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.helper{display:flex;gap:12px;align-items:center;background:#fbfaff;border:3px solid var(--line);border-radius:18px;padding:14px 16px}
+.helper .ic{flex:none;width:44px;height:44px;border-radius:12px;background:var(--brand-soft);display:grid;place-items:center;color:var(--brand)}
 .helper .txt{flex:1;min-width:0}
-.helper .txt b{display:block;font-family:var(--display);font-weight:600;font-size:1.02rem}
+.helper .txt b{display:block;font-weight:800;font-size:1.02rem}
 .helper .txt span{font-size:.85rem;color:#6b6490}
 .switch{position:relative;flex:none}
 .switch input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
-.switch span{display:block;width:52px;height:30px;border-radius:30px;background:#d8d1ea;transition:background .15s;position:relative}
-.switch span::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .15s}
+.switch span{display:block;width:56px;height:32px;border-radius:32px;background:#d8d1ea;transition:background .15s;position:relative}
+.switch span::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .15s}
 .switch input:checked+span{background:var(--brand)}
-.switch input:checked+span::after{transform:translateX(22px)}
+.switch input:checked+span::after{transform:translateX(24px)}
 .seg{display:flex;background:var(--brand-soft);border-radius:12px;padding:3px;flex:none}
 .seg button{border:0;background:transparent;padding:6px 10px;border-radius:9px;font-weight:800;font-size:.85rem;color:#5d5487}
 .seg button[aria-pressed=true]{background:#fff;color:var(--brand);box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.go{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.btn-go{border:0;background:var(--brand);color:#fff;font-family:var(--display);font-weight:600;font-size:1.2rem;padding:16px 30px;border-radius:16px;box-shadow:0 6px 0 #3b1a9e;display:inline-flex;gap:10px;align-items:center;transition:transform .1s,box-shadow .1s}
-.btn-go:active{transform:translateY(4px);box-shadow:0 2px 0 #3b1a9e}
-.go p{margin:0;color:#6b6490;font-size:.9rem}
-.preview{position:sticky;top:20px}
-.preview .label{font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7a6fa6;margin:0 0 8px}
-.pv{border-radius:22px;overflow:hidden;border:2px solid var(--line);background:var(--sky);box-shadow:0 20px 40px rgba(60,30,140,.15)}
-.pv .pv-bar{background:var(--hdr);color:var(--hdr-ink);border-bottom:1px solid var(--hdr-line);display:flex;align-items:center;gap:8px;padding:10px 14px;font-family:var(--display);font-weight:700;font-size:.95rem}
-.pv .pv-bar .dots{margin-left:auto;display:flex;gap:6px}
-.pv .pv-bar .dots i{width:44px;height:8px;border-radius:8px;background:var(--hdr-line)}
-.pv .pv-bar .dots i:first-child{background:var(--tab-on)}
-.pv .pv-body{position:relative;padding:20px 16px 18px;text-align:center;overflow:hidden;background:var(--art) center/cover no-repeat,var(--sky)}
-.pv .pv-body::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 40% at 50% 14%,var(--veil),transparent 75%)}
-.pv h3{font-family:var(--hfont);color:var(--ink);font-weight:700;margin:2px 0 4px;font-size:1.5rem;line-height:1.15;text-wrap:balance}
-[data-skin=gaming] .pv h3{font-size:.95rem;line-height:1.5}
-[data-skin=sports] .pv h3{font-weight:400}
-.pv .pv-sub{color:var(--muted);margin:0 0 6px;font-size:.92rem}
-.pv .stops{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:4px}
-.pv .stop:nth-child(even){margin-top:0}
-.pv .card{padding:10px 12px;gap:8px}
-.pv .card h4{font-size:.95rem}
-[data-skin=gaming] .pv .card h4{font-size:.6rem}
-.pv .card .num{width:30px;height:30px;font-size:.85rem}
-.pv .card .meta,.pv .card .place{font-size:.72rem}
-.pv .card .arrow{display:none}
-.pv .scene{margin-bottom:-20px}
-.pv .backdrop{opacity:.9}
-.pv-note{margin:12px 2px 0;font-size:.88rem;color:#6b6490}
+.ready{text-align:center;padding:10px 0 4px}
+.ready h1{font-weight:800;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.035em;margin:6px 0 8px}
+.ready .badge{width:96px;height:96px;border-radius:26px;display:grid;place-items:center;margin:0 auto;box-shadow:0 10px 24px rgba(41,20,84,.18)}
+.summary{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:16px 0 4px}
+.summary span{background:var(--brand-soft);color:#4a2fa0;font-weight:800;font-size:.88rem;padding:8px 14px;border-radius:999px}
+.nav-row{display:flex;align-items:center;gap:12px;margin-top:26px;padding-top:18px;border-top:2px solid #f2eefa}
+.btn-back{border:0;background:none;font-weight:800;color:#7a6fa6;padding:12px 6px}
+.btn-back[hidden]{display:none}
+.btn-next{margin-left:auto;border:0;background:linear-gradient(120deg,#8047fa,#6634ec);color:#fff;font-weight:800;font-size:1.15rem;padding:16px 30px;border-radius:18px;box-shadow:0 6px 0 #4b1fc2;display:inline-flex;gap:10px;align-items:center;transition:transform .1s,box-shadow .1s,opacity .15s}
+.btn-next:active{transform:translateY(4px);box-shadow:0 2px 0 #4b1fc2}
+.btn-next:disabled{opacity:.4;box-shadow:0 6px 0 #b5a3e8}
+.btn-next.go{background:linear-gradient(110deg,#30ddd1,#20d9c5);color:#251052;box-shadow:0 6px 0 #12a597}
+.need{font-size:.88rem;color:#7a6fa6;font-weight:700}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.confetti i{position:absolute;top:-20px;width:10px;height:14px;border-radius:2px;animation:fall 2.4s cubic-bezier(.3,.6,.5,1) forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
 
-/* ---------- App (learning-target map) ---------- */
+/* ---------- Student app ---------- */
 #app{min-height:100vh;background:var(--sky);color:var(--ink);font-family:var(--body)}
 header.top{background:var(--hdr);color:var(--hdr-ink);border-bottom:1px solid var(--hdr-line);padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .top-in{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.top .wordmark{color:var(--hdr-ink)}
-.logo{display:flex;align-items:center;gap:8px}
 nav.main{display:flex;gap:6px;margin:0 auto;flex-wrap:wrap}
-nav.main a{display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:16px;font-family:var(--display);font-weight:600;font-size:1.05rem;color:var(--hdr-ink);text-decoration:none;opacity:.8}
-nav.main a.on{background:var(--tabs);opacity:1;color:var(--tab-on)}
-[data-skin=sports] nav.main a.on,[data-skin=gaming] nav.main a.on,[data-skin=bog] nav.main a.on{color:var(--hdr-ink)}
+nav.main button{border:0;background:none;display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:16px;font-weight:800;font-size:1rem;color:var(--hdr-ink);opacity:.85}
+nav.main button.on{background:var(--nav-on-bg);opacity:1;color:var(--nav-on)}
+nav.main button:disabled{opacity:.4}
 nav.main svg{width:22px;height:22px}
-.who{display:flex;align-items:center;gap:12px}
-.avatar{width:46px;height:46px;border-radius:12px;background:#ffcf2e;display:grid;place-items:center;border:2px solid rgba(0,0,0,.08)}
-.who b{display:block;font-family:var(--display);font-weight:600;font-size:1.1rem;line-height:1.1}
-.who small{opacity:.75;font-size:.82rem}
-.btn-gear{border:2px solid var(--hdr-line);background:transparent;color:var(--hdr-ink);border-radius:12px;padding:9px 12px;display:inline-flex;gap:8px;align-items:center;font-weight:800;font-size:.9rem}
-.btn-gear:hover{background:var(--tabs)}
+.who{position:relative}
+.who-btn{border:0;background:none;display:flex;align-items:center;gap:12px;color:var(--hdr-ink);padding:4px;border-radius:14px;text-align:left}
+.avatar{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;border:2px solid rgba(0,0,0,.08);flex:none}
+.who-btn b{display:block;font-weight:800;font-size:1.05rem;line-height:1.1}
+.who-btn small{opacity:.75;font-size:.8rem}
+.menu{position:absolute;right:0;top:calc(100% + 8px);background:#fff;color:var(--brand-ink);border-radius:16px;box-shadow:0 18px 40px rgba(20,10,60,.25);padding:8px;min-width:220px;z-index:20;display:flex;flex-direction:column}
+.menu button{border:0;background:none;text-align:left;padding:11px 12px;border-radius:10px;font-weight:700}
+.menu button:hover{background:var(--brand-soft)}
 .subjects{background:var(--tabs);border-bottom:1px solid var(--hdr-line);padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .subjects-in{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.subj{border:0;background:var(--tab);color:var(--hdr-ink);font-family:var(--display);font-weight:600;font-size:1.15rem;padding:12px 34px;border-radius:14px;display:flex;gap:10px;align-items:center;min-width:0}
-.subj.on{background:var(--tab-on);color:var(--tab-on-ink);box-shadow:0 6px 16px rgba(0,0,0,.15)}
-.subj .soon{font-size:.62rem;font-family:var(--body);font-weight:800;letter-spacing:.1em;background:rgba(127,127,127,.15);padding:3px 7px;border-radius:6px}
+.subj{border:0;background:var(--tab);color:var(--hdr-ink);font-weight:800;font-size:1.1rem;padding:11px 36px;border-radius:14px;display:flex;gap:10px;align-items:center}
+.subj.on{background:var(--tab-on);color:var(--tab-on-ink);box-shadow:0 5px 12px rgba(112,56,243,.17)}
+.subj .soon{font-size:.6rem;font-weight:800;letter-spacing:.1em;background:rgba(127,127,127,.15);padding:3px 7px;border-radius:6px}
 .subj.off{opacity:.6;cursor:default}
-[data-skin=gaming] .subj,[data-skin=gaming] nav.main a,[data-skin=gaming] .who b{font-family:'Press Start 2P',monospace;font-size:.7rem;font-weight:400}
-[data-skin=gaming] .subj,[data-skin=gaming] .btn-gear{border-radius:0}
-[data-skin=notebook] .subj,[data-skin=notebook] nav.main a{font-family:'Patrick Hand',cursive;font-size:1.3rem;font-weight:400}
+[data-skin=gaming] .subj,[data-skin=gaming] nav.main button,[data-skin=gaming] .who-btn b{font-family:'Press Start 2P',monospace;font-size:.66rem;font-weight:400}
+[data-skin=gaming] .subj{border-radius:0}
+[data-skin=notebook] .subj,[data-skin=notebook] nav.main button{font-family:'Patrick Hand',cursive;font-size:1.3rem;font-weight:400}
 [data-skin=notebook] .subj{border:1.5px solid #22306e}
 [data-skin=sports] .subj{font-family:'Bungee',sans-serif;font-weight:400;font-size:1rem}
+[data-skin=nextgen] .subj,[data-skin=nextgen] nav.main button{font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+[data-skin=nextgen] .subj{border-radius:2px}
 
-.hero{position:relative;overflow:hidden;background:var(--art) center/cover no-repeat,var(--sky);padding-block:34px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 50% 32% at 50% 12%,var(--veil),transparent 75%);pointer-events:none}
+.hero{position:relative;overflow:hidden;background:var(--art) center/cover no-repeat,var(--sky);min-height:calc(100vh - 150px);padding-block:30px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 50% 32% at 50% 10%,var(--veil),transparent 75%);pointer-events:none}
 .backdrop{position:absolute;inset:0;pointer-events:none}
 .backdrop svg{position:absolute;width:100%;height:100%}
-.hero-in{position:relative;max-width:1400px;margin:0 auto;text-align:center}
-.eyebrow{font-size:.85rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
-.hero h1{font-family:var(--hfont);font-weight:700;color:var(--ink);font-size:clamp(2rem,4.8vw,4.2rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 10px;text-wrap:balance}
+.view{position:relative;max-width:1400px;margin:0 auto}
+.view[hidden]{display:none}
+.center{text-align:center}
+.eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.hero h1,.hero h2.title{font-family:var(--hfont);font-weight:800;color:var(--ink);font-size:clamp(2rem,4.6vw,3.9rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 10px;text-wrap:balance}
 .hero h1 .dot{color:var(--dot)}
-[data-skin=sports] .hero h1{font-weight:400;letter-spacing:.01em;text-shadow:0 3px 0 rgba(0,0,0,.35)}
-[data-skin=gaming] .hero h1{font-weight:400;font-size:clamp(1.2rem,2.8vw,2.3rem);line-height:1.4;text-shadow:4px 4px 0 #ff3fa4}
-[data-skin=notebook] .hero h1{font-weight:400;font-size:clamp(2.4rem,5vw,4.4rem)}
-[data-skin=nextgen] .hero h1{font-weight:700;text-transform:uppercase;letter-spacing:.04em;line-height:1}
-[data-skin=nextgen] .card{clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));border-width:1px;backdrop-filter:blur(6px)}
-[data-skin=nextgen] .card .num{border-radius:2px;font-family:'Rajdhani',sans-serif;font-size:1.35rem;clip-path:polygon(0 0,100% 0,100% 70%,70% 100%,0 100%)}
-[data-skin=nextgen] .card h4{font-weight:700;font-size:1.45rem;letter-spacing:.01em}
-[data-skin=nextgen] .card .place{color:#3ddc5a}
-[data-skin=nextgen] .bar i{border-radius:0;height:6px}
-[data-skin=nextgen] .subj,[data-skin=nextgen] nav.main a{font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
-[data-skin=nextgen] .subj,[data-skin=nextgen] .chip,[data-skin=nextgen] .btn-gear{border-radius:2px}
-[data-skin=nextgen] nav.main a.on{color:#3ddc5a}
-[data-skin=nextgen] .bubble{border-radius:2px;border:1px solid rgba(61,220,90,.55);clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%)}
-[data-skin=nextgen] .pv h3{text-transform:uppercase;letter-spacing:.03em}
-[data-skin=bog] .hero h1{text-shadow:0 0 24px rgba(244,230,92,.25)}
-.sub{font-size:1.25rem;color:var(--muted);margin:0 0 6px}
-[data-skin=notebook] .sub{font-family:'Patrick Hand',cursive;font-size:1.5rem}
+[data-skin=sports] .hero :is(h1,h2.title){font-weight:400;letter-spacing:.01em;text-shadow:0 3px 0 rgba(0,0,0,.35)}
+[data-skin=gaming] .hero :is(h1,h2.title){font-weight:400;font-size:clamp(1.1rem,2.6vw,2.1rem);line-height:1.4;letter-spacing:0;text-shadow:4px 4px 0 #ff3fa4}
+[data-skin=notebook] .hero :is(h1,h2.title){font-weight:400;letter-spacing:0;font-size:clamp(2.4rem,5vw,4.2rem)}
+[data-skin=nextgen] .hero :is(h1,h2.title){font-weight:700;text-transform:uppercase;letter-spacing:.03em;line-height:1}
+[data-skin=bog] .hero :is(h1,h2.title){text-shadow:0 0 24px rgba(244,230,92,.25)}
+.sub{font-size:1.2rem;color:var(--muted);margin:0 0 6px;font-weight:600}
+[data-skin=notebook] .sub{font-family:'Patrick Hand',cursive;font-size:1.5rem;font-weight:400}
 .hero-tools{display:flex;justify-content:center;gap:10px;margin:10px 0 0;flex-wrap:wrap}
 .chip{border:0;background:var(--chip);color:var(--chip-ink);border-radius:999px;padding:8px 14px;font-weight:800;font-size:.85rem;display:inline-flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.08)}
 [data-skin=gaming] .chip{border-radius:0;border:2px solid #2ef2c4}
+[data-skin=nextgen] .chip{border-radius:2px}
 [data-skin=notebook] .chip{border:1.5px solid #22306e;box-shadow:none}
 
+/* learning map */
 .stops{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:18px;align-items:start}
-.stop{display:flex;flex-direction:column;align-items:stretch;min-width:0}
+.stop{display:flex;flex-direction:column;min-width:0}
 .stop:nth-child(even){margin-top:48px}
 .scene{position:relative;z-index:1;margin-bottom:-34px;animation:bob 6s ease-in-out infinite}
 .stop:nth-child(2) .scene{animation-delay:-1.5s}.stop:nth-child(3) .scene{animation-delay:-3s}.stop:nth-child(4) .scene{animation-delay:-4.5s}
-.scene img{width:100%;max-width:100%;height:auto;display:block;filter:drop-shadow(0 14px 18px rgba(20,10,60,.28))}
-[data-skin=notebook] .scene img{width:68%;margin:0 auto;filter:none}
-[data-skin=sports] .scene img,[data-skin=habitats] .scene img,[data-skin=bog] .scene img{width:92%;margin:0 auto}
+.scene img{width:100%;height:auto;display:block;filter:drop-shadow(0 14px 18px rgba(20,10,60,.28))}
 @keyframes bob{50%{transform:translateY(-8px)}}
 [data-skin=notebook] .scene{margin-bottom:-10px;animation:none}
-[data-skin=notebook] .stop:nth-child(odd) .card{transform:rotate(-.6deg)}
-[data-skin=notebook] .stop:nth-child(even) .card{transform:rotate(.5deg)}
-.card{position:relative;z-index:2;text-align:left;background:var(--card);color:var(--card-ink);border:2px solid var(--card-line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 18px 18px 16px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;transition:transform .15s;width:100%}
+[data-skin=notebook] .scene img,[data-skin=notebook] .pstop .art img{width:68%;margin:0 auto;filter:none}
+[data-skin=sports] .scene img,[data-skin=habitats] .scene img,[data-skin=bog] .scene img{width:92%;margin:0 auto}
+.card{position:relative;z-index:2;text-align:left;background:var(--card);color:var(--card-ink);border:2px solid var(--card-line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 16px 16px 14px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;transition:transform .15s;width:100%}
 .card:hover{transform:translateY(-3px)}
 [data-skin=islands] .card,[data-skin=habitats] .card{border-width:1px}
-.card .num{width:44px;height:44px;border-radius:50%;background:var(--badge);color:var(--badge-ink);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:1.2rem}
-[data-skin=gaming] .card .num{border-radius:0;font-family:'Press Start 2P',monospace;font-weight:400;font-size:.62rem;width:auto;min-width:44px;padding:0 6px}
-[data-skin=sports] .card .num{border-radius:8px;font-family:'Bungee',sans-serif;font-weight:400;font-size:1.3rem}
-[data-skin=notebook] .card .num{border:2px solid #22306e;font-family:'Patrick Hand',cursive;font-weight:400;font-size:1.4rem;border-radius:48% 52% 50% 46%}
-.card h4{margin:0 0 8px;font-family:var(--cfont);font-weight:600;font-size:1.35rem;line-height:1.15;text-wrap:balance}
-[data-skin=sports] .card h4{font-weight:400;font-size:1.05rem;letter-spacing:.02em}
-[data-skin=gaming] .card h4{font-weight:400;font-size:.72rem;line-height:1.55}
-[data-skin=notebook] .card h4{font-weight:400;font-size:1.55rem;margin-bottom:2px}
-.card .place{display:block;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--card-muted);margin-bottom:4px}
-.card .can{display:block;font-family:'Patrick Hand',cursive;font-size:1.15rem;color:var(--card-muted);margin-bottom:8px;line-height:1.2}
+.num{width:36px;height:36px;border-radius:50%;background:var(--badge);color:var(--badge-ink);display:grid;place-items:center;font-weight:800;font-size:1rem;flex:none}
+.card .num{width:42px;height:42px;font-size:1.1rem}
+[data-skin=gaming] .num{border-radius:0;font-family:'Press Start 2P',monospace;font-weight:400;font-size:.58rem;width:auto;min-width:42px;padding:0 6px}
+[data-skin=sports] .num{border-radius:8px;font-family:'Bungee',sans-serif;font-weight:400}
+[data-skin=notebook] .num{border:2px solid #22306e;font-family:'Patrick Hand',cursive;font-weight:400;font-size:1.3rem;border-radius:48% 52% 50% 46%}
+[data-skin=nextgen] .num{border-radius:2px;font-family:'Rajdhani',sans-serif;font-size:1.25rem;clip-path:polygon(0 0,100% 0,100% 70%,70% 100%,0 100%)}
+.card h4{margin:0 0 8px;font-family:var(--cfont);font-weight:800;font-size:1.25rem;line-height:1.15;letter-spacing:-.01em;text-wrap:balance}
+[data-skin=sports] .card h4{font-weight:400;font-size:1rem;letter-spacing:.02em}
+[data-skin=gaming] .card h4{font-weight:400;font-size:.7rem;line-height:1.55}
+[data-skin=notebook] .card h4{font-weight:400;font-size:1.5rem;margin-bottom:2px}
+[data-skin=nextgen] .card h4{font-weight:700;font-size:1.4rem}
+[data-skin=nextgen] .card{clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));border-width:1px}
+[data-skin=notebook] .stop:nth-child(odd) .card{transform:rotate(-.6deg)}
+[data-skin=notebook] .stop:nth-child(even) .card{transform:rotate(.5deg)}
+.place{display:block;font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--card-muted);margin-bottom:4px}
+[data-skin=nextgen] .place{color:#3ddc5a}
+.can{display:block;font-family:'Patrick Hand',cursive;font-size:1.15rem;color:var(--card-muted);margin-bottom:8px;line-height:1.2}
 .bar{display:flex;gap:4px;margin-bottom:8px}
-.bar i{flex:1;height:10px;border-radius:10px;background:var(--track)}
-.bar i.done{background:var(--fill);position:relative}
-[data-skin=gaming] .bar i{border-radius:0}
+.bar i{flex:1;height:9px;border-radius:9px;background:var(--track)}
+.bar i.done{background:var(--fill)}
+[data-skin=gaming] .bar i,[data-skin=nextgen] .bar i{border-radius:0}
 [data-skin=notebook] .bar i{border-radius:2px;height:8px;border:1px solid #22306e;background:transparent}
 [data-skin=notebook] .bar i.done{background:#22306e}
-.bar.empty i{background:var(--track)}
-.card .meta{font-size:.9rem;color:var(--card-muted)}
-[data-skin=gaming] .card .meta{font-family:'Press Start 2P',monospace;font-size:.5rem;line-height:1.6;text-transform:uppercase}
-.card .arrow{color:var(--card-ink);opacity:.8}
-
-.buddy{display:flex;align-items:flex-end;gap:10px;margin-top:34px;text-align:left}
+.meta{font-size:.86rem;color:var(--card-muted);font-weight:600}
+[data-skin=gaming] .meta{font-family:'Press Start 2P',monospace;font-size:.5rem;line-height:1.6;text-transform:uppercase;font-weight:400}
+.arrow{color:var(--card-ink);opacity:.8}
+.buddy{display:flex;align-items:flex-end;gap:10px;margin-top:30px;text-align:left}
 .buddy .hippo{width:150px;flex:none}
 .buddy .hippo img{display:block;width:100%;height:auto;filter:drop-shadow(0 10px 14px rgba(0,0,0,.25))}
-.bubble{background:var(--bubble);color:var(--bubble-ink);border-radius:24px;padding:16px 22px;font-size:1.15rem;line-height:1.35;box-shadow:0 8px 24px rgba(0,0,0,.12);max-width:34ch;margin-bottom:22px}
+.bubble{background:var(--bubble);color:var(--bubble-ink);border-radius:24px;padding:16px 22px;font-size:1.12rem;line-height:1.35;box-shadow:0 8px 24px rgba(0,0,0,.12);max-width:34ch;margin-bottom:22px;font-weight:600}
 .bubble b{font-weight:800}
-[data-skin=gaming] .bubble{border-radius:0;border:3px solid #2ef2c4;font-family:'Press Start 2P',monospace;font-size:.62rem;line-height:1.8}
-[data-skin=notebook] .bubble{border:1.5px solid #22306e;font-family:'Patrick Hand',cursive;font-size:1.4rem;box-shadow:none}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(30px);opacity:0;background:#22124f;color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;transition:.25s;z-index:30;max-width:calc(100% - 32px)}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+[data-skin=gaming] .bubble{border-radius:0;border:3px solid #2ef2c4;font-family:'Press Start 2P',monospace;font-size:.6rem;line-height:1.8;font-weight:400}
+[data-skin=notebook] .bubble{border:1.5px solid #22306e;font-family:'Patrick Hand',cursive;font-size:1.4rem;box-shadow:none;font-weight:400}
+[data-skin=nextgen] .bubble{border-radius:2px;border:1px solid rgba(61,220,90,.55)}
 
+/* adventure path */
+.path-top{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.back{border:0;background:var(--chip);color:var(--chip-ink);font-weight:800;font-size:.85rem;padding:8px 14px;border-radius:999px;margin-bottom:8px}
+.path-top .t{flex:1;min-width:0}
+.path-top h2.title{font-size:clamp(1.8rem,3.6vw,3rem);text-align:left;margin:0}
+.dots{background:var(--chip);color:var(--chip-ink);border-radius:16px;padding:10px 14px;font-weight:800;font-size:.85rem}
+.dots .row{display:flex;gap:6px;margin-top:8px}
+.dots .row span{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.72rem;background:var(--track);color:var(--card-ink)}
+.dots .row span.done{background:var(--fill);color:var(--badge-ink)}
+.dots .row span.on{background:var(--badge);color:var(--badge-ink)}
+.path-wrap{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px;align-items:start}
+.path-stops{position:relative;padding-bottom:20px}
+.path-line{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.pstop{position:relative;width:min(300px,40%);margin-top:-46px}
+.pstop:first-child{margin-top:0}
+.pstop .art{position:relative}
+.pstop .art img.scn{width:100%;display:block;filter:drop-shadow(0 14px 18px rgba(20,10,60,.25))}
+.pstop .me{position:absolute;left:50%;top:6%;transform:translateX(-50%);width:76px;height:76px;border-radius:50%;overflow:hidden;border:4px solid var(--badge);background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.35),0 10px 20px rgba(0,0,0,.25);animation:bob 2.6s ease-in-out infinite}
+.pstop .me img{width:100%;height:170%;object-fit:cover;object-position:50% 0}
+.plabel{position:relative;z-index:2;margin:-26px auto 0;width:92%;background:var(--card);color:var(--card-ink);border:1px solid var(--card-line);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 12px;display:flex;align-items:center;gap:10px;text-align:left}
+.plabel b{display:block;font-family:var(--cfont);font-weight:800;font-size:1rem;line-height:1.15}
+[data-skin=sports] .plabel b{font-weight:400;font-size:.85rem}
+[data-skin=gaming] .plabel b{font-weight:400;font-size:.58rem;line-height:1.5}
+[data-skin=notebook] .plabel b{font-weight:400;font-size:1.25rem}
+[data-skin=nextgen] .plabel b{font-weight:700;font-size:1.15rem}
+.plabel small{font-size:.78rem;color:var(--card-muted);font-weight:700}
+.plabel .pct{margin-left:auto;font-weight:800;font-size:.85rem;color:var(--fill)}
+.pstop.ahead .art{opacity:.82;filter:saturate(.8)}
+.pstop.next .plabel{outline:3px solid var(--badge);outline-offset:2px}
+.path-panel{position:sticky;top:16px;background:var(--card);color:var(--card-ink);border:1px solid var(--card-line);border-radius:22px;box-shadow:var(--shadow);padding:20px}
+.path-panel .eyebrow{color:var(--card-muted);margin-bottom:4px}
+.path-panel h3{font-family:var(--cfont);font-weight:800;font-size:1.5rem;margin:0 0 4px;line-height:1.1}
+[data-skin=gaming] .path-panel h3{font-weight:400;font-size:.8rem;line-height:1.5}
+[data-skin=sports] .path-panel h3{font-weight:400;font-size:1.1rem}
+.path-panel p{margin:0 0 16px;color:var(--card-muted);font-weight:600}
+.btn-continue{width:100%;border:0;background:linear-gradient(110deg,#30ddd1,#20d9c5);color:#251052;font-weight:800;font-size:1.05rem;padding:14px;border-radius:19px}
+[data-skin=sports] .btn-continue{background:#ffc928}
+[data-skin=gaming] .btn-continue{background:#2ef2c4;border-radius:0;font-family:'Press Start 2P',monospace;font-size:.65rem}
+[data-skin=nextgen] .btn-continue{background:#3ddc5a;border-radius:2px;color:#07130a;text-transform:uppercase;letter-spacing:.06em}
+[data-skin=bog] .btn-continue{background:#b8f05a}
+[data-skin=notebook] .btn-continue{background:#22306e;color:#fff;border-radius:6px}
+[data-skin=habitats] .btn-continue{background:#2f7a4a;color:#fff}
+
+/* progress */
+.prog{max-width:1000px;margin:0 auto}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px auto 18px;max-width:760px}
+.stat{background:var(--card);color:var(--card-ink);border:1px solid var(--card-line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.stat b{font-size:2rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.stat span{font-size:.85rem;font-weight:700;color:var(--card-muted);line-height:1.2}
+.topics{background:var(--card);color:var(--card-ink);border:1px solid var(--card-line);border-radius:22px;box-shadow:var(--shadow);padding:10px}
+.trow{width:100%;border:0;background:none;display:grid;grid-template-columns:minmax(0,1.4fr) auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 12px;border-radius:14px;text-align:left;color:inherit}
+.trow:hover{background:rgba(127,127,127,.08)}
+.trow+.trow{border-top:1px solid rgba(127,127,127,.15)}
+.trow b{font-family:var(--cfont);font-weight:800;font-size:1.08rem}
+[data-skin=gaming] .trow b{font-weight:400;font-size:.62rem;line-height:1.5}
+[data-skin=sports] .trow b{font-weight:400;font-size:.9rem}
+.pill{font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--track);color:var(--card-ink);white-space:nowrap}
+.pill.go{background:var(--fill);color:var(--badge-ink)}
+.trow .bar{margin:0}
+.trow small{font-size:.8rem;font-weight:700;color:var(--card-muted);white-space:nowrap}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(30px);opacity:0;background:#291454;color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;transition:.25s;z-index:60;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @keyframes twinkle{50%{opacity:.25}}
 .fly{animation:twinkle 2.4s ease-in-out infinite}
-.coin{animation:bob 1.6s steps(2) infinite}
 
-@media (max-width:1300px){.worlds{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:1100px){
   .stops{grid-template-columns:repeat(2,minmax(0,1fr))}
   .stop:nth-child(even){margin-top:0}
-  .ob-wrap{grid-template-columns:1fr}
-  .preview{position:static;order:-1}
+  .worlds{grid-template-columns:repeat(3,minmax(0,1fr))}
   nav.main{order:3;width:100%;justify-content:center;margin:0}
+  .buddy-ob{width:150px}
+  .path-wrap{grid-template-columns:1fr}
+  .path-panel{position:static}
 }
-@media (max-width:720px){
-  .worlds{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:820px){
+  .stage{flex-direction:column;align-items:stretch}
+  .buddy-ob{width:120px;align-self:flex-start;margin:70px 0 -30px 10px;z-index:2}
+  .buddy-ob .talk{left:110px;right:auto;top:6px;width:min(250px,calc(100vw - 170px))}
+  .buddy-ob .talk::after{left:-10px;top:18px;bottom:auto;border:10px solid transparent;border-right-color:#fff;border-left:0}
+  .pics{grid-template-columns:repeat(5,minmax(0,1fr))}
   .helpers{grid-template-columns:1fr}
-  .who small,.who b{display:none}
-  nav.main a{padding:9px 12px;font-size:.95rem}
+  .who-btn small,.who-btn b{display:none}
+  .trow{grid-template-columns:minmax(0,1fr) auto}
+  .trow .bar,.trow small{display:none}
+  .pstop{width:min(300px,62%)}
 }
 @media (max-width:560px){
+  .panel{padding:22px 18px 18px;border-radius:22px}
+  .worlds{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .world .thumb{height:92px}
   .stops{grid-template-columns:1fr;gap:24px}
-  .pv .stops{grid-template-columns:repeat(2,minmax(0,1fr))}
   .subj{padding:10px 16px;font-size:1rem}
   .buddy .hippo{width:100px}
   .bubble{font-size:1rem}
+  .stats{grid-template-columns:1fr}
+  .pstop{width:78%}
+  .trail .st{width:28px;height:28px}
+  .trail i{width:8px}
+  nav.main button{padding:9px 12px;font-size:.92rem}
 }
 </style>
 </head>
 <body>
 
-<div id="onboard" class="ob" data-skin="islands">
-  <div class="ob-wrap">
-    <section>
-      <div class="ob-brand"><span id="ob-logo"></span><span class="wordmark">KnowHippo</span></div>
-      <div class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i>&nbsp;Getting started</div>
-      <h1>Hi Henry! Let’s set up your learning space.</h1>
-      <p class="lede">Pick the world you want to explore. You can change it any time from Settings.</p>
+<div id="onboard" data-skin="islands">
+  <div class="ob-top">
+    <div class="logo"><span class="mark" id="ob-logo"></span><span class="wordmark">KnowHippo</span></div>
+    <div class="trail" id="trail" aria-label="Sign-in steps"></div>
+  </div>
+  <div class="stage">
+    <div class="buddy-ob" aria-hidden="true"><p class="talk" id="talk"></p><img id="ob-hippo" src="img/hippo-islands.webp" alt=""></div>
+    <section class="panel" id="panel">
 
-      <h2>Pick your world</h2>
-      <p class="hint">Your lessons stay the same. Only the look changes.</p>
-      <div class="worlds" id="worlds" role="radiogroup" aria-label="Pick your world"></div>
-
-      <h2>Learning helpers</h2>
-      <p class="hint">Turn on anything that helps you learn your best.</p>
-      <div class="helpers">
-        <label class="helper">
-          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></span>
-          <span class="txt"><b>Read aloud</b><span>Hear directions and questions</span></span>
-          <span class="switch"><input type="checkbox" id="opt-read"><span></span></span>
-        </label>
-        <label class="helper">
-          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
-          <span class="txt"><b>Sound effects</b><span>Little sounds when you tap</span></span>
-          <span class="switch"><input type="checkbox" id="opt-sound" checked><span></span></span>
-        </label>
-        <div class="helper">
-          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h10v2M9 5v14M7 19h4M14 13v-1h6v1M17 12v7M15.5 19h3"/></svg></span>
-          <span class="txt"><b>Text size</b><span>Make words easier to see</span></span>
-          <span class="seg" id="opt-size"><button type="button" id="size-reg" aria-pressed="true" data-v="regular">Aa</button><button type="button" id="size-lg" aria-pressed="false" data-v="large" style="font-size:1.05rem">Aa</button></span>
+      <div class="step" data-step="signin">
+        <div class="q"><h1>Welcome to KnowHippo!</h1><button class="say" type="button" data-say="Welcome to KnowHippo! Type your class code, then tap your three secret pictures." aria-label="Read aloud"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button></div>
+        <p class="lede">Let’s get you signed in. Your teacher gave your class a code.</p>
+        <div class="field">
+          <h2><label for="code">1. Type your class code</label></h2>
+          <input class="big-input code-input" id="code" value="MATH-3B" maxlength="10" autocomplete="off" spellcheck="false">
         </div>
-        <label class="helper">
-          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg></span>
-          <span class="txt"><b>Calm mode</b><span>Fewer moving things on screen</span></span>
-          <span class="switch"><input type="checkbox" id="opt-calm"><span></span></span>
-        </label>
+        <div class="field">
+          <h2>2. Tap your 3 secret pictures</h2>
+          <div class="pics" id="pics"></div>
+          <div class="slots" id="slots" aria-live="polite"></div>
+          <p class="hint">Prototype: any 3 pictures will work.</p>
+        </div>
       </div>
 
-      <div class="go">
-        <button class="btn-go" id="start" type="button">Start learning <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <p>Step 2 of 3 · Next, Hippo checks what you already know.</p>
+      <div class="step" data-step="name" hidden>
+        <div class="q"><h1>What should Hippo call you?</h1><button class="say" type="button" data-say="What should Hippo call you? Type your name, then pick your badge." aria-label="Read aloud"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button></div>
+        <p class="lede">This is the name you’ll see on your adventures.</p>
+        <div class="field">
+          <h2><label for="name">Your name</label></h2>
+          <input class="big-input" id="name" placeholder="Type your name" maxlength="18" autocomplete="off">
+        </div>
+        <div class="field">
+          <h2>Pick your badge</h2>
+          <div class="avatars" id="avatars" role="radiogroup" aria-label="Pick your badge"></div>
+        </div>
+      </div>
+
+      <div class="step" data-step="world" hidden>
+        <div class="q"><h1>Pick your world</h1><button class="say" type="button" data-say="Pick your world. Your lessons stay the same. Only the look changes." aria-label="Read aloud"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button></div>
+        <p class="lede">Your lessons stay the same. Only the look changes. You can switch any time.</p>
+        <div class="worlds" id="worlds" role="radiogroup" aria-label="Pick your world"></div>
+      </div>
+
+      <div class="step" data-step="helpers" hidden>
+        <div class="q"><h1>Turn on your helpers</h1><button class="say" type="button" data-say="Turn on any helpers that help you learn your best." aria-label="Read aloud"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button></div>
+        <p class="lede">Pick anything that helps you learn your best.</p>
+        <div class="helpers">
+          <label class="helper">
+            <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></span>
+            <span class="txt"><b>Read aloud</b><span>Hear directions and questions</span></span>
+            <span class="switch"><input type="checkbox" id="opt-read"><span></span></span>
+          </label>
+          <label class="helper">
+            <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+            <span class="txt"><b>Sound effects</b><span>Little sounds when you tap</span></span>
+            <span class="switch"><input type="checkbox" id="opt-sound" checked><span></span></span>
+          </label>
+          <div class="helper">
+            <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h10v2M9 5v14M7 19h4M14 13v-1h6v1M17 12v7M15.5 19h3"/></svg></span>
+            <span class="txt"><b>Text size</b><span>Make words easier to see</span></span>
+            <span class="seg" id="opt-size"><button type="button" id="size-reg" aria-pressed="true" data-v="regular">Aa</button><button type="button" id="size-lg" aria-pressed="false" data-v="large" style="font-size:1.05rem">Aa</button></span>
+          </div>
+          <label class="helper">
+            <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg></span>
+            <span class="txt"><b>Calm mode</b><span>Fewer moving things on screen</span></span>
+            <span class="switch"><input type="checkbox" id="opt-calm"><span></span></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="step ready" data-step="ready" hidden>
+        <span class="badge" id="ready-badge"></span>
+        <h1 id="ready-title">You’re all set!</h1>
+        <p class="lede" style="margin:0 auto" id="ready-sub"></p>
+        <div class="summary" id="summary"></div>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn-back" id="back" type="button">‹ Back</button>
+        <span class="need" id="need"></span>
+        <button class="btn-next" id="next" type="button">Next <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
     </section>
-
-    <aside class="preview" aria-label="Preview">
-      <p class="label">Preview · <span id="pv-name">Islands</span></p>
-      <div class="pv" id="pv"></div>
-      <p class="pv-note" id="pv-note"></p>
-    </aside>
   </div>
 </div>
 
 <div id="app" hidden>
   <header class="top">
     <div class="top-in">
-      <div class="logo"><span id="hdr-logo"></span><span class="wordmark">KnowHippo</span></div>
-      <nav class="main" aria-label="Main">
-        <a href="#" class="on" onclick="return false"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg>My Learning</a>
-        <a href="#" onclick="return false"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="14" width="3.5" height="6" rx="1"/><rect x="8.5" y="11" width="3.5" height="9" rx="1"/><rect x="14" y="8" width="3.5" height="12" rx="1"/><rect x="19.5" y="4" width="2.5" height="16" rx="1"/></svg>My Progress</a>
-        <a href="#" onclick="return false"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h10v3h3v2a5 5 0 0 1-4.3 5A5 5 0 0 1 13 15.9V18h3v3H8v-3h3v-2.1A5 5 0 0 1 8.3 13 5 5 0 0 1 4 8V6h3zm0 5V8H6a3 3 0 0 0 1 2.2zm10 0v2.2A3 3 0 0 0 18 8z"/></svg>Rewards</a>
+      <div class="logo"><span class="mark" id="hdr-logo"></span><span class="wordmark">KnowHippo</span></div>
+      <nav class="main" aria-label="Student navigation">
+        <button type="button" class="on" data-view="map"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg>My Learning</button>
+        <button type="button" data-view="progress"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="14" width="3.5" height="6" rx="1"/><rect x="8.5" y="11" width="3.5" height="9" rx="1"/><rect x="14" y="8" width="3.5" height="12" rx="1"/><rect x="19.5" y="4" width="2.5" height="16" rx="1"/></svg>My Progress</button>
+        <button type="button" disabled title="Coming soon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h10v3h3v2a5 5 0 0 1-4.3 5A5 5 0 0 1 13 15.9V18h3v3H8v-3h3v-2.1A5 5 0 0 1 8.3 13 5 5 0 0 1 4 8V6h3zm0 5V8H6a3 3 0 0 0 1 2.2zm10 0v2.2A3 3 0 0 0 18 8z"/></svg>Rewards</button>
       </nav>
       <div class="who">
-        <span class="avatar"><svg width="30" height="20" viewBox="0 0 30 20"><rect x="1" y="1" width="28" height="18" rx="9" fill="#5b2fd6"/><circle cx="10" cy="10" r="4.5" fill="#fff"/><circle cx="20" cy="10" r="4.5" fill="#fff"/><circle cx="10" cy="10" r="2" fill="#22124f"/><circle cx="20" cy="10" r="2" fill="#22124f"/></svg></span>
-        <span><b>Henry</b><small>Grade 3 · Texas</small></span>
-        <button class="btn-gear" id="open-settings" type="button" aria-label="Settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
+        <button class="who-btn" id="who" type="button" aria-haspopup="true" aria-expanded="false"><span class="avatar" id="hdr-avatar"></span><span><b id="hdr-name">Henry</b><small>Grade 3 · Texas</small></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="menu" id="menu" hidden>
+          <button type="button" data-go="world">Change my world</button>
+          <button type="button" data-go="helpers">Learning helpers</button>
+          <button type="button" data-go="name">Change my name or badge</button>
+          <button type="button" data-go="signout">Sign out</button>
+        </div>
       </div>
     </div>
   </header>
@@ -325,7 +461,8 @@ nav.main svg{width:22px;height:22px}
   </div>
   <main class="hero">
     <div class="backdrop" id="backdrop"></div>
-    <div class="hero-in">
+
+    <section class="view center" id="view-map">
       <p class="eyebrow">Math · Round 1</p>
       <h1 id="h1"></h1>
       <p class="sub" id="sub"></p>
@@ -335,179 +472,308 @@ nav.main svg{width:22px;height:22px}
       </div>
       <div class="stops" id="stops"></div>
       <div class="buddy"><span class="hippo" id="buddy-hippo"></span><p class="bubble" id="bubble"></p></div>
-    </div>
+    </section>
+
+    <section class="view" id="view-path" hidden>
+      <div class="path-top">
+        <div class="t"><button class="back" id="path-back" type="button">‹ My adventures</button><h2 class="title" id="path-title"></h2></div>
+        <div class="dots" id="path-dots"></div>
+      </div>
+      <div class="path-wrap">
+        <div class="path-stops" id="path-stops"></div>
+        <aside class="path-panel" id="path-panel"></aside>
+      </div>
+    </section>
+
+    <section class="view" id="view-progress" hidden>
+      <div class="prog">
+        <div class="center"><h2 class="title" id="prog-title"></h2><p class="sub">Texas · Grade 3 Math</p></div>
+        <div class="stats" id="stats"></div>
+        <div class="topics" id="topics"></div>
+      </div>
+    </section>
   </main>
 </div>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
 (function(){
-
 const TOPICS=[
-  {t:'Represent Data',can:'I can show data in bar graphs and pictographs.',done:1},
-  {t:'Multiplicative Comparison',can:'I can use multiplication to compare two amounts.',done:0},
-  {t:'Represent Numbers',can:'I can show numbers up to 100,000 in different ways.',done:0},
-  {t:'Rounding Numbers',can:'I can round numbers to the nearest 10 or 100.',done:0}
+  {t:'Represent Data',can:'I can show data in bar graphs and pictographs.',done:1,skills:['Represent Dot Plots','Represent Frequency Tables','Represent Pictographs','Represent Bar Graphs']},
+  {t:'Multiplicative Comparison',can:'I can use multiplication to compare two amounts.',done:0,skills:['Times as Many','Write Comparison Equations','Comparison Word Problems','Use Bar Models']},
+  {t:'Represent Numbers',can:'I can show numbers up to 100,000 in different ways.',done:0,skills:['Place Value to 100,000','Expanded Form','Word Form','Numbers on a Number Line']},
+  {t:'Rounding Numbers',can:'I can round numbers to the nearest 10 or 100.',done:0,skills:['Round to the Nearest Ten','Round to the Nearest Hundred','Estimate Sums','Estimate Differences']}
 ];
+const stopsFor=t=>['Starting point','Hippo’s workshop',...t.skills,'Show your growth'];
 
 const SKINS={
   islands:{name:'Islands',tag:'Current',blurb:'Floating crystal islands in the clouds',
     h:'Your next adventures await',sub:'Pick a path. Let’s make a discovery.',going:'Your journey is underway',ready:'Ready to explore',
-    buddy:'One adventure at a time. <b>You’ve got this, Henry!</b>',places:['Crystal Observatory','Portal Isle','Bridgewater Falls','Lookout Tower'],
-    note:'The look KnowHippo has today, kept as the default.'},
+    buddy:n=>`One adventure at a time. <b>You’ve got this, ${n}!</b>`,places:['Crystal Observatory','Portal Isle','Bridgewater Falls','Lookout Tower']},
   sports:{name:'Sports',blurb:'Fields, courts and game-day lights',
     h:'Game day. Pick your field',sub:'Every round is a chance to score.',going:'Your season is underway',ready:'Ready to play',
-    buddy:'Warm up, then go for the goal. <b>Let’s play, Henry!</b>',places:['Diamond Park','Center Court','Kickoff Field','Speed Track'],
-    note:'Scoreboard cards and jersey numbers. Progress reads like a season.'},
+    buddy:n=>`Warm up, then go for the goal. <b>Let’s play, ${n}!</b>`,places:['Diamond Park','Center Court','Kickoff Field','Speed Track']},
   gaming:{name:'Retro Lands',blurb:'Old-school pixel worlds and coins',
     h:'Choose your level',sub:'Clear a world to unlock the next one.',going:'Level in progress',ready:'Press start',
-    buddy:'Player 1 ready? <b>Let’s go, Henry!</b>',places:['World 1-1','World 1-2','World 1-3','World 1-4'],
-    note:'Retro pixel art with arcade type. Each target is a level.'},
+    buddy:n=>`Player 1 ready? <b>Let’s go, ${n}!</b>`,places:['World 1-1','World 1-2','World 1-3','World 1-4']},
   nextgen:{name:'Next-Gen',blurb:'Sleek console-style gaming hub',
     h:'Select your mission',sub:'Level up one skill at a time.',going:'Mission in progress',ready:'Ready to launch',
-    buddy:'Controller charged. <b>Your move, Henry.</b>',places:['Data Hub','Power Gate','Build Zone','Victory Podium'],
-    note:'Modern console look: dark glass, clean angles, electric green.'},
+    buddy:n=>`Controller charged. <b>Your move, ${n}.</b>`,places:['Data Hub','Power Gate','Build Zone','Victory Podium']},
   habitats:{name:'Habitats',blurb:'Rainforest, reef, desert and arctic',
-    h:'Where will you explore',sub:'Every habitat hides a math mystery.',going:'Expedition underway',ready:'Ready to explore',
-    buddy:'Grab your field notebook. <b>Let’s explore, Henry!</b>',places:['Rainforest','Coral Reef','Desert','Arctic'],
-    note:'Each target lives in a terrarium. Ties nicely to future Science.'},
+    h:'Where will you explore?',sub:'Every habitat hides a math mystery.',going:'Expedition underway',ready:'Ready to explore',
+    buddy:n=>`Grab your field notebook. <b>Let’s explore, ${n}!</b>`,places:['Rainforest','Coral Reef','Desert','Arctic']},
   bog:{name:'Boggie Lands',blurb:'Lily pads, toadstools and fireflies',
     h:'Into the boggie lands',sub:'Hop across the lily pads to find each puzzle.',going:'You’re splashing along',ready:'Ready to hop in',
-    buddy:'Squish, splash, solve! <b>You’ve got this, Henry.</b>',places:['Toadstool Hollow','Lily Pad Pond','Hollow Log','Weeping Willow'],
-    note:'A cozy, glowing swamp at dusk. Soft colors, gentle fireflies.'},
+    buddy:n=>`Squish, splash, solve! <b>You’ve got this, ${n}.</b>`,places:['Toadstool Hollow','Lily Pad Pond','Hollow Log','Weeping Willow']},
   notebook:{name:'Notebook',blurb:'Plain paper, quiet and focused',
     h:'Today’s learning targets',sub:'Pick one to start. Take your time.',going:'In progress',ready:'Not started',
-    buddy:'One step at a time, <b>Henry.</b>',places:null,
-    note:'Low-distraction mode. Shows the “I can” statement for each target.'}
+    buddy:n=>`One step at a time, <b>${n}.</b>`,places:null}
 };
 const ORDER=['islands','sports','gaming','nextgen','habitats','bog','notebook'];
 
-/* ---------- Hippo buddy, with a hat for each world ---------- */
-function hat(skin){
-  switch(skin){
-    case 'islands': return '<path d="M22 26q38-26 76 0z" fill="#d8b77a"/><rect x="18" y="24" width="84" height="7" rx="3.5" fill="#b8924f"/><rect x="34" y="20" width="52" height="5" fill="#6d3ee8"/>';
-    case 'sports': return '<path d="M24 30q36-34 72 0z" fill="#e5322d"/><path d="M90 28q18 2 22 8l-26 0z" fill="#b8231f"/><circle cx="60" cy="10" r="4" fill="#fff"/><path d="M60 14v14" stroke="#fff" stroke-width="2"/>';
-    case 'gaming': return '<path d="M18 46q0-44 42-44t42 44" fill="none" stroke="#2ef2c4" stroke-width="7"/><rect x="8" y="38" width="16" height="24" rx="4" fill="#ff3fa4"/><rect x="96" y="38" width="16" height="24" rx="4" fill="#ff3fa4"/>';
-    case 'habitats': return '<ellipse cx="60" cy="24" rx="48" ry="9" fill="#9a7a45"/><path d="M30 24q4-24 30-24t30 24z" fill="#c9a865"/><rect x="31" y="17" width="58" height="6" fill="#6b5226"/>';
-    case 'bog': return '<ellipse cx="60" cy="20" rx="42" ry="12" fill="#5fae4a"/><path d="M60 20 L100 14 L98 24z" fill="#173a33"/><circle cx="44" cy="12" r="6" fill="#f2a3c7"/><circle cx="44" cy="12" r="2.5" fill="#f4e65c"/>';
-    case 'notebook': return '<rect x="86" y="2" width="9" height="38" rx="2" transform="rotate(28 90 20)" fill="#ffcf2e" stroke="#22306e" stroke-width="2"/><circle cx="44" cy="40" r="11" fill="none" stroke="#22306e" stroke-width="3"/><circle cx="76" cy="40" r="11" fill="none" stroke="#22306e" stroke-width="3"/><path d="M55 40h10" stroke="#22306e" stroke-width="3"/>';
-  }
-  return '';
+/* Picture password + badges */
+const PICS={
+  star:'<polygon points="20,3 25,15 38,15 27,23 31,36 20,28 9,36 13,23 2,15 15,15" fill="#ffc928" stroke="#e0a400" stroke-width="1.5" stroke-linejoin="round"/>',
+  heart:'<path d="M20 35C6 25 2 17 6 10c4-6 11-5 14 1 3-6 10-7 14-1 4 7 0 15-14 25z" fill="#ff5c8a"/>',
+  moon:'<path d="M27 5a15 15 0 1 0 8 22A12 12 0 1 1 27 5z" fill="#8b6be6"/>',
+  sun:'<g stroke="#ffb020" stroke-width="3" stroke-linecap="round"><path d="M20 3v5M20 32v5M3 20h5M32 20h5M8 8l3.5 3.5M28.5 28.5 32 32M8 32l3.5-3.5M28.5 11.5 32 8"/></g><circle cx="20" cy="20" r="8" fill="#ffc928"/>',
+  apple:'<path d="M20 12c-6-4-14 0-13 9 1 9 7 15 13 12 6 3 12-3 13-12 1-9-7-13-13-9z" fill="#e5322d"/><path d="M20 12c0-4 1-7 3-8" stroke="#6b4a2b" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="26" cy="7" rx="5" ry="2.5" fill="#3ad16b" transform="rotate(-25 26 7)"/>',
+  fish:'<path d="M28 20l10-8v16z" fill="#1f8fd0"/><ellipse cx="17" cy="20" rx="14" ry="9" fill="#2fa7e0"/><circle cx="10" cy="18" r="2" fill="#0b2a44"/>',
+  tree:'<rect x="17" y="27" width="6" height="10" rx="1" fill="#8a5d34"/><path d="M20 3 33 22H7z" fill="#2f8a3c"/><path d="M20 10 35 29H5z" fill="#3fa356"/>',
+  cloud:'<path d="M11 31a7 7 0 0 1 0-14 10 10 0 0 1 19-2 8 8 0 0 1 0 16z" fill="#7cc4ff"/>',
+  flower:'<g fill="#ff8ac2"><circle cx="20" cy="10" r="6"/><circle cx="29.5" cy="17" r="6"/><circle cx="26" cy="28" r="6"/><circle cx="14" cy="28" r="6"/><circle cx="10.5" cy="17" r="6"/></g><circle cx="20" cy="20" r="5" fill="#ffc928"/>'
+};
+const AVATARS={sun:'#ffcf2e',mint:'#5fe0b5',coral:'#ff8a7a',sky:'#6cc5ff',grape:'#b48cff',lime:'#b8f05a'};
+const pic=k=>`<svg viewBox="0 0 40 40" aria-hidden="true">${PICS[k]}</svg>`;
+const badge=(c,size=30)=>`<svg width="${size}" height="${Math.round(size*.66)}" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="1" width="28" height="18" rx="9" fill="#291454"/><circle cx="10" cy="10" r="4.5" fill="#fff"/><circle cx="20" cy="10" r="4.5" fill="#fff"/><circle cx="10" cy="10" r="2" fill="${c}"/><circle cx="20" cy="10" r="2" fill="${c}"/></svg>`;
+function hippoHead(){
+  return `<svg viewBox="0 0 120 96" aria-hidden="true"><ellipse cx="30" cy="22" rx="10" ry="10" fill="#7b5cd6"/><ellipse cx="90" cy="22" rx="10" ry="10" fill="#7b5cd6"/><ellipse cx="30" cy="22" rx="5" ry="5" fill="#f2a3c7"/><ellipse cx="90" cy="22" rx="5" ry="5" fill="#f2a3c7"/><ellipse cx="60" cy="50" rx="40" ry="34" fill="#8b6be6"/><ellipse cx="60" cy="66" rx="33" ry="21" fill="#b9a3f5"/><ellipse cx="50" cy="60" rx="3.5" ry="4.5" fill="#5b3fb5"/><ellipse cx="70" cy="60" rx="3.5" ry="4.5" fill="#5b3fb5"/><circle cx="44" cy="38" r="9" fill="#fff"/><circle cx="76" cy="38" r="9" fill="#fff"/><circle cx="46" cy="39" r="4.5" fill="#22163f"/><circle cx="78" cy="39" r="4.5" fill="#22163f"/><circle cx="47.5" cy="37" r="1.6" fill="#fff"/><circle cx="79.5" cy="37" r="1.6" fill="#fff"/><path d="M46 74q14 11 28 0" fill="none" stroke="#4a2f99" stroke-width="3" stroke-linecap="round"/></svg>`;
 }
-function hippo(skin,full){
-  const body=full?'<ellipse cx="60" cy="116" rx="38" ry="26" fill="#7b5cd6"/><ellipse cx="60" cy="122" rx="22" ry="15" fill="#a993ef"/>':'';
-  return `<svg viewBox="0 0 120 ${full?146:96}" aria-hidden="true">${body}
-  <ellipse cx="30" cy="22" rx="10" ry="10" fill="#7b5cd6"/><ellipse cx="90" cy="22" rx="10" ry="10" fill="#7b5cd6"/>
-  <ellipse cx="30" cy="22" rx="5" ry="5" fill="#f2a3c7"/><ellipse cx="90" cy="22" rx="5" ry="5" fill="#f2a3c7"/>
-  <ellipse cx="60" cy="50" rx="40" ry="34" fill="#8b6be6"/>
-  <ellipse cx="60" cy="66" rx="33" ry="21" fill="#b9a3f5"/>
-  <ellipse cx="50" cy="60" rx="3.5" ry="4.5" fill="#5b3fb5"/><ellipse cx="70" cy="60" rx="3.5" ry="4.5" fill="#5b3fb5"/>
-  <circle cx="44" cy="38" r="9" fill="#fff"/><circle cx="76" cy="38" r="9" fill="#fff"/>
-  <circle cx="46" cy="39" r="4.5" fill="#22163f"/><circle cx="78" cy="39" r="4.5" fill="#22163f"/>
-  <circle cx="47.5" cy="37" r="1.6" fill="#fff"/><circle cx="79.5" cy="37" r="1.6" fill="#fff"/>
-  <path d="M46 74q14 11 28 0" fill="none" stroke="#4a2f99" stroke-width="3" stroke-linecap="round"/>
-  ${skin?hat(skin):''}</svg>`;
-}
-
-/* ---------- Scene art per world (generated with Higgsfield) ---------- */
-const SCENES={};
-Object.keys(SKINS).forEach(k=>{SCENES[k]=i=>`<img src="img/${k}-${i}.webp" alt="" loading="lazy" decoding="async">`});
+const scene=(k,i)=>`<img src="img/${k}-${i%4}.webp" alt="" loading="lazy" decoding="async">`;
 function backdrop(skin){
   if(skin!=='bog')return '';
   let flies='',s=5; const r=()=>(s=(s*16807)%2147483647)/2147483647;
   for(let k=0;k<22;k++)flies+=`<circle class="fly" style="animation-delay:${(r()*2.4).toFixed(2)}s" cx="${(r()*1400).toFixed(0)}" cy="${(r()*650).toFixed(0)}" r="${(2+r()*2.5).toFixed(1)}" fill="#f4e65c" opacity=".85"/>`;
   return `<svg viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice">${flies}</svg>`;
 }
-
-/* ---------- Render the learning-target map ---------- */
-function cardHTML(skin,t,i){
-  const S=SKINS[skin], going=t.done>0;
-  const badge=skin==='gaming'?`1-${i+1}`:i+1;
-  const place=S.places?`<span class="place">${S.places[i]}</span>`:`<span class="can">${t.can}</span>`;
-  const segs=Array.from({length:8},(_,k)=>`<i class="${k<t.done?'done':''}"></i>`).join('');
-  const bar=going?`<div class="bar">${segs}</div>`:`<div class="bar empty"><i></i></div>`;
-  return `<button class="card" type="button" data-i="${i}"><span class="num">${badge}</span><span>${place}<h4>${t.t}</h4>${bar}<span class="meta">${going?S.going:S.ready}</span></span><svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
-}
-function stopsHTML(skin,list){
-  return list.map((t,i)=>`<div class="stop"><div class="scene">${SCENES[skin](i)}</div>${cardHTML(skin,t,i)}</div>`).join('');
-}
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const $=id=>document.getElementById(id);
 
-const state={skin:'islands',read:false,sound:true,size:'regular',calm:false};
+const state={skin:'islands',read:false,sound:true,size:'regular',calm:false,name:'',avatar:'sun'};
 try{Object.assign(state,JSON.parse(localStorage.getItem('kh-settings')||'{}'))}catch(e){}
 if(!SKINS[state.skin])state.skin='islands';
+if(!AVATARS[state.avatar])state.avatar='sun';
 const save=()=>{try{localStorage.setItem('kh-settings',JSON.stringify(state))}catch(e){}};
+const nm=()=>esc(state.name.trim()||'friend');
 
+/* ---------- Sounds + read aloud ---------- */
+let actx;
+function blip(f=660){
+  if(!state.sound)return;
+  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.type=(state.skin==='gaming')?'square':'sine';o.frequency.value=f;g.gain.setValueAtTime(.07,actx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+.15);o.connect(g).connect(actx.destination);o.start();o.stop(actx.currentTime+.16)}catch(e){}
+}
+function say(text){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=.95;speechSynthesis.speak(u)}catch(e){toast('Read aloud isn’t available in this browser.')}}
+let tt;function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2400)}
 function applyHelpers(){
   document.documentElement.classList.toggle('large',state.size==='large');
   document.documentElement.classList.toggle('calm',!!state.calm);
   $('speak').hidden=!state.read;
 }
 
-function renderApp(){
-  const S=SKINS[state.skin];
-  $('app').dataset.skin=state.skin;
-  $('h1').innerHTML=`${S.h}${state.skin==='notebook'?'':'<span class="dot">'+(/[a-z]$/i.test(S.h)&&(S.h.startsWith('Where'))?'?':'.')+'</span>'}`;
-  $('sub').textContent=S.sub;
-  $('world-name').textContent=S.name;
-  $('stops').innerHTML=stopsHTML(state.skin,TOPICS);
-  $('backdrop').innerHTML=backdrop(state.skin);
-  $('bubble').innerHTML=S.buddy;
-  $('buddy-hippo').innerHTML=`<img src="img/hippo-${state.skin}.webp" alt="Hippo, your learning buddy">`;
-  $('hdr-logo').innerHTML=`<span style="display:block;width:44px">${hippo(null)}</span>`;
-  applyHelpers();
+/* ---------- Sign-in wizard ---------- */
+const STEPS=['signin','name','world','helpers','ready'];
+const LABELS=['Sign in','Name','World','Helpers','Go!'];
+let step=0, picked=[], returnToApp=false;
+const TALK={
+  signin:()=>'Hi there! I’m Hippo. Let’s get you signed in.',
+  name:()=>state.name.trim()?`Nice to meet you, ${nm()}!`:'I can’t wait to learn your name!',
+  world:()=>`Ooh, ${SKINS[state.skin].name}! Great pick.`,
+  helpers:()=>'These helpers can make learning easier.',
+  ready:()=>`Let’s go, ${nm()}!`
+};
+function canNext(){
+  if(STEPS[step]==='signin')return $('code').value.trim().length>=3&&picked.length===3;
+  if(STEPS[step]==='name')return state.name.trim().length>0;
+  return true;
+}
+function needText(){
+  if(STEPS[step]==='signin'){if($('code').value.trim().length<3)return 'Type your class code';if(picked.length<3)return `Tap ${3-picked.length} more picture${3-picked.length===1?'':'s'}`}
+  if(STEPS[step]==='name'&&!state.name.trim())return 'Type your name to keep going';
+  return '';
+}
+function refreshNav(){
+  $('next').disabled=!canNext(); $('need').textContent=needText();
+  $('talk').innerHTML=TALK[STEPS[step]]();
+}
+function renderTrail(){
+  $('trail').innerHTML=STEPS.map((s,i)=>`${i?`<i class="${i<=step?'done':''}"></i>`:''}<span class="st ${i<step?'done':i===step?'on':''}" title="${LABELS[i]}">${i<step?'✓':i+1}</span>`).join('');
+}
+function showStep(i){
+  step=i;
+  document.querySelectorAll('.step').forEach(el=>el.hidden=el.dataset.step!==STEPS[i]);
+  const p=$('panel'); p.style.animation='none'; void p.offsetWidth; p.style.animation='';
+  $('back').hidden=i===0;
+  const last=i===STEPS.length-1;
+  $('next').classList.toggle('go',last);
+  $('next').firstChild.textContent=last?'Enter KnowHippo ':(i===0?'Sign in ':'Next ');
+  if(STEPS[i]==='ready')renderReady();
+  renderTrail(); refreshNav();
+  const f=document.querySelector(`.step[data-step="${STEPS[i]}"] input`); if(f&&STEPS[i]!=='signin')setTimeout(()=>f.focus(),50);
+  if(state.read){const b=document.querySelector(`.step[data-step="${STEPS[i]}"] .say`); if(b)say(b.dataset.say)}
+}
+function renderPics(){
+  $('pics').innerHTML=Object.keys(PICS).map(k=>`<button type="button" class="pic" data-k="${k}" aria-label="${k}" aria-pressed="${picked.includes(k)}">${pic(k)}</button>`).join('');
+  $('slots').innerHTML=[0,1,2].map(i=>`<span class="slot ${picked[i]?'full':''}">${picked[i]?pic(picked[i]):''}</span>`).join('')+(picked.length?'<button class="clear" type="button" id="clear-pics">Start over</button>':'');
+}
+function renderAvatars(){
+  $('avatars').innerHTML=Object.entries(AVATARS).map(([k,c])=>`<button type="button" class="av" role="radio" data-k="${k}" aria-label="${k} badge" aria-checked="${k===state.avatar}"><span style="background:${c}">${badge('#291454',34)}</span></button>`).join('');
+}
+function renderWorlds(){
+  $('worlds').innerHTML=ORDER.map(k=>{const S=SKINS[k];return `<button type="button" class="world" role="radio" id="w-${k}" data-k="${k}" aria-checked="${k===state.skin}"><span class="thumb" data-skin="${k}">${scene(k,k==='sports'?2:k==='habitats'?1:0)}</span>${S.tag?`<span class="tag">${S.tag}</span>`:''}<span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></span><b>${S.name}</b><small>${S.blurb}</small></button>`}).join('');
+}
+function setObSkin(){
+  $('onboard').dataset.skin=state.skin;
+  $('ob-hippo').src=`img/hippo-${state.skin}.webp`;
+}
+function renderReady(){
+  const c=AVATARS[state.avatar];
+  $('ready-badge').style.background=c; $('ready-badge').innerHTML=badge('#291454',64);
+  $('ready-title').innerHTML=`You’re all set, ${nm()}!`;
+  $('ready-sub').textContent='Hippo has your adventures ready. Let’s go explore!';
+  const helpers=[state.read&&'Read aloud',state.sound&&'Sounds on',state.size==='large'&&'Big text',state.calm&&'Calm mode'].filter(Boolean);
+  $('summary').innerHTML=[`World: ${SKINS[state.skin].name}`,...helpers].map(t=>`<span>${t}</span>`).join('');
+}
+function confetti(){
+  if(state.calm||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const box=document.createElement('div'); box.className='confetti';
+  const cols=['#8047fa','#20d9c5','#ffc928','#ff5c8a','#6cc5ff','#b8f05a'];
+  for(let k=0;k<80;k++){const i=document.createElement('i');i.style.left=Math.random()*100+'%';i.style.background=cols[k%cols.length];i.style.animationDelay=(Math.random()*.6)+'s';i.style.transform=`rotate(${Math.random()*180}deg)`;box.appendChild(i)}
+  document.body.appendChild(box); setTimeout(()=>box.remove(),3400);
 }
 
-function renderOnboard(){
-  $('worlds').innerHTML=ORDER.map(k=>{const S=SKINS[k];return `<button type="button" class="world" role="radio" id="w-${k}" data-k="${k}" aria-checked="${k===state.skin}"><span class="thumb" data-skin="${k}">${SCENES[k](k==='sports'?2:k==='habitats'?1:0)}</span>${S.tag?`<span class="tag">${S.tag}</span>`:''}<span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></span><b>${S.name}</b><small>${S.blurb}</small></button>`}).join('');
-  renderPreview();
-  $('opt-read').checked=!!state.read; $('opt-sound').checked=!!state.sound; $('opt-calm').checked=!!state.calm;
-  $('size-reg').setAttribute('aria-pressed',state.size!=='large'); $('size-lg').setAttribute('aria-pressed',state.size==='large');
-  $('ob-logo').innerHTML=`<span style="display:block;width:46px">${hippo(null)}</span>`;
-}
-function renderPreview(){
-  const S=SKINS[state.skin], pv=$('pv');
-  pv.dataset.skin=state.skin;
-  $('pv-name').textContent=S.name;
-  $('pv-note').textContent=S.note;
-  pv.innerHTML=`<div class="pv-bar"><span style="width:26px">${hippo(null)}</span>KnowHippo<span class="dots"><i></i><i></i><i></i></span></div>
-   <div class="pv-body"><div class="backdrop">${backdrop(state.skin)}</div><div style="position:relative"><p class="eyebrow" style="font-size:.68rem">Math · Round 1</p><h3>${S.h}</h3><p class="pv-sub">${S.sub}</p><div class="stops">${stopsHTML(state.skin,TOPICS.slice(0,2))}</div></div></div>`;
-}
-
-/* ---------- Little extras: sound + read aloud ---------- */
-let actx;
-function blip(f=660){
-  if(!state.sound)return;
-  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.type=state.skin==='gaming'?'square':'sine';o.frequency.value=f;g.gain.setValueAtTime(.08,actx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+.15);o.connect(g).connect(actx.destination);o.start();o.stop(actx.currentTime+.16)}catch(e){}
-}
-function say(text){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=.95;speechSynthesis.speak(u)}catch(e){toast('Read aloud is not available in this browser.')}}
-let tt;
-function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2400)}
-
-/* ---------- Events ---------- */
+$('pics').addEventListener('click',e=>{
+  if(e.target.closest('#clear-pics')){picked=[];renderPics();refreshNav();return}
+  const b=e.target.closest('.pic'); if(!b||picked.length>=3)return;
+  picked.push(b.dataset.k); blip(500+picked.length*120); renderPics(); refreshNav();
+  if(picked.length===3)setTimeout(()=>$('next').focus(),50);
+});
+$('slots').addEventListener('click',e=>{if(e.target.closest('#clear-pics')){picked=[];renderPics();refreshNav()}});
+$('code').addEventListener('input',refreshNav);
+$('name').addEventListener('input',e=>{state.name=e.target.value;refreshNav()});
+$('avatars').addEventListener('click',e=>{const b=e.target.closest('.av');if(!b)return;state.avatar=b.dataset.k;blip(700);renderAvatars()});
 $('worlds').addEventListener('click',e=>{
   const b=e.target.closest('.world'); if(!b)return;
   state.skin=b.dataset.k; blip(520+ORDER.indexOf(state.skin)*60);
   document.querySelectorAll('.world').forEach(w=>w.setAttribute('aria-checked',w===b));
-  renderPreview();
+  setObSkin(); refreshNav();
 });
-$('worlds').addEventListener('keydown',e=>{
-  if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp'].includes(e.key))return;
-  e.preventDefault(); const d=(e.key==='ArrowRight'||e.key==='ArrowDown')?1:-1;
-  const k=ORDER[(ORDER.indexOf(state.skin)+d+ORDER.length)%ORDER.length]; $('w-'+k).click(); $('w-'+k).focus();
-});
-$('opt-read').onchange=e=>{state.read=e.target.checked;blip()};
+$('opt-read').onchange=e=>{state.read=e.target.checked;blip();refreshNav()};
 $('opt-sound').onchange=e=>{state.sound=e.target.checked;blip()};
 $('opt-calm').onchange=e=>{state.calm=e.target.checked;applyHelpers()};
 $('opt-size').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;state.size=b.dataset.v;$('size-reg').setAttribute('aria-pressed',state.size!=='large');$('size-lg').setAttribute('aria-pressed',state.size==='large');applyHelpers()});
-$('start').onclick=()=>{save();blip(880);renderApp();$('onboard').hidden=true;$('app').hidden=false;window.scrollTo(0,0);toast(`Welcome to ${SKINS[state.skin].name}, Henry!`)};
-const openSettings=()=>{blip(440);renderOnboard();$('app').hidden=true;$('onboard').hidden=false;window.scrollTo(0,0)};
-$('open-settings').onclick=openSettings; $('change-world').onclick=openSettings;
-$('speak').onclick=()=>{const S=SKINS[state.skin];say(`${S.h}. ${S.sub}`)};
-$('stops').addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;blip(780);const t=TOPICS[c.dataset.i];if(state.read)say(t.t+'. '+t.can);toast(`Opening ${t.t}…`)});
+document.querySelectorAll('.say').forEach(b=>b.onclick=()=>say(b.dataset.say));
+$('back').onclick=()=>{blip(440);showStep(Math.max(0,step-1))};
+$('next').onclick=()=>{
+  if(!canNext())return;
+  if(returnToApp&&STEPS[step]!=='signin'&&STEPS[step]!=='ready'){save();blip(880);enterApp(false);return}
+  if(step<STEPS.length-1){blip(660+step*80);showStep(step+1);return}
+  save();blip(990);confetti();setTimeout(()=>enterApp(true),state.calm?0:700);
+};
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('onboard').hidden&&e.target.tagName==='INPUT')$('next').click()});
 
+function startOnboarding(at=0,fromApp=false){
+  returnToApp=fromApp;
+  if(at===0)picked=[];
+  $('name').value=state.name; $('opt-read').checked=!!state.read; $('opt-sound').checked=!!state.sound; $('opt-calm').checked=!!state.calm;
+  $('size-reg').setAttribute('aria-pressed',state.size!=='large'); $('size-lg').setAttribute('aria-pressed',state.size==='large');
+  renderPics(); renderAvatars(); renderWorlds(); setObSkin();
+  $('app').hidden=true; $('onboard').hidden=false; window.scrollTo(0,0);
+  showStep(at);
+  if(fromApp){$('next').firstChild.textContent='Save ';$('back').hidden=true}
+}
+
+/* ---------- Student app ---------- */
+let view='map', openTopic=0;
+function cardHTML(skin,t,i){
+  const S=SKINS[skin], going=t.done>0, badgeTxt=skin==='gaming'?`1-${i+1}`:i+1;
+  const place=S.places?`<span class="place">${S.places[i]}</span>`:`<span class="can">${t.can}</span>`;
+  const bar=going?`<div class="bar">${Array.from({length:8},(_,k)=>`<i class="${k<t.done?'done':''}"></i>`).join('')}</div>`:'<div class="bar"><i></i></div>';
+  return `<button class="card" type="button" data-i="${i}"><span class="num">${badgeTxt}</span><span>${place}<h4>${t.t}</h4>${bar}<span class="meta">${going?S.going:S.ready}</span></span><svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
+}
+function renderMap(){
+  const S=SKINS[state.skin];
+  $('h1').innerHTML=`${S.h}${state.skin==='notebook'||/\?$/.test(S.h)?'':'<span class="dot">.</span>'}`;
+  $('sub').textContent=S.sub; $('world-name').textContent=S.name;
+  $('stops').innerHTML=TOPICS.map((t,i)=>`<div class="stop"><div class="scene">${scene(state.skin,i)}</div>${cardHTML(state.skin,t,i)}</div>`).join('');
+  $('bubble').innerHTML=S.buddy(nm());
+  $('buddy-hippo').innerHTML=`<img src="img/hippo-${state.skin}.webp" alt="Hippo, your learning buddy">`;
+}
+const XS=['4%','36%','62%','34%','6%','38%','62%'];
+function renderPath(){
+  const t=TOPICS[openTopic], list=stopsFor(t), next=Math.min(t.done,list.length-1);
+  $('path-title').textContent=t.t;
+  $('path-dots').innerHTML=`${t.done} of ${list.length} stops finished<div class="row">${list.map((_,i)=>`<span class="${i<t.done?'done':i===next?'on':''}">${i<t.done?'✓':i+1}</span>`).join('')}</div>`;
+  $('path-stops').innerHTML='<svg class="path-line" id="path-line" aria-hidden="true"></svg>'+list.map((name,i)=>{
+    const st=i<t.done?'done':i===next?'next':'ahead';
+    const label=st==='done'?'Finished':st==='next'?'Up next':'Ahead on your path';
+    const num=st==='done'?'✓':i+1;
+    return `<div class="pstop ${st}" style="margin-left:${XS[i%XS.length]}"><div class="art"><img class="scn" src="img/${state.skin}-${(i+openTopic)%4}.webp" alt="">${st==='next'?`<span class="me"><img src="img/hippo-${state.skin}.webp" alt="You are here"></span>`:''}</div><div class="plabel"><span class="num">${num}</span><span><b>${name}</b><small>${label}</small></span>${st==='done'?'<span class="pct">12.5%</span>':''}</div></div>`;
+  }).join('');
+  const cur=list[next];
+  $('path-panel').innerHTML=`<p class="eyebrow">Up next</p><h3>${cur}</h3><p>${next===0?'A quick check to see what you already know.':next===list.length-1?'Show Hippo how much you’ve grown.':'8 questions'}</p><button class="btn-continue" type="button" id="continue">${t.done?'Continue adventure':'Start adventure'} →</button>`;
+  $('continue').onclick=()=>{blip(880);toast(`Prototype: this opens “${cur}”.`)};
+  requestAnimationFrame(drawLine);
+}
+function drawLine(){
+  const box=$('path-stops'), svg=$('path-line'); if(!box||!svg||$('view-path').hidden)return;
+  const b=box.getBoundingClientRect();
+  const pts=[...box.querySelectorAll('.pstop .art')].map(a=>{const r=a.getBoundingClientRect();return [(r.left+r.width/2-b.left).toFixed(0),(r.top+r.height*.55-b.top).toFixed(0)]});
+  const col=getComputedStyle($('app')).getPropertyValue('--badge').trim()||'#fff';
+  svg.innerHTML=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 14" opacity=".85"/>`;
+}
+addEventListener('resize',()=>{if(view==='path')drawLine()});
+function renderProgress(){
+  $('prog-title').innerHTML=`Look how far you’ve come, ${nm()}!`;
+  const started=TOPICS.filter(t=>t.done>0).length, skills=TOPICS.reduce((a,t)=>a+t.done,0);
+  $('stats').innerHTML=[[0,'Adventures finished'],[skills,'Stops finished'],[started,'Adventures started']].map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
+  $('topics').innerHTML=TOPICS.map((t,i)=>{const n=stopsFor(t).length;return `<button class="trow" type="button" data-i="${i}"><b>${t.t}</b><span class="pill ${t.done?'go':''}">${t.done?'In progress':'Not started'}</span><div class="bar">${Array.from({length:n},(_,k)=>`<i class="${k<t.done?'done':''}"></i>`).join('')}</div><small>${t.done} of ${n} stops</small></button>`}).join('');
+}
+function setView(v){
+  view=v;
+  ['map','path','progress'].forEach(k=>$('view-'+k).hidden=k!==v);
+  document.querySelectorAll('nav.main button[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===(v==='path'?'map':v)));
+  if(v==='map')renderMap(); if(v==='path')renderPath(); if(v==='progress')renderProgress();
+  window.scrollTo(0,0);
+}
+function enterApp(welcome){
+  $('app').dataset.skin=state.skin;
+  $('backdrop').innerHTML=backdrop(state.skin);
+  $('hdr-logo').innerHTML=hippoHead();
+  $('hdr-name').textContent=state.name.trim()||'Friend';
+  const av=$('hdr-avatar'); av.style.background=AVATARS[state.avatar]; av.innerHTML=badge('#291454',30);
+  applyHelpers();
+  $('onboard').hidden=true; $('app').hidden=false;
+  setView(welcome?'map':view);
+  if(welcome)toast(`Welcome to ${SKINS[state.skin].name}, ${state.name.trim()||'friend'}!`);
+}
+document.querySelector('nav.main').addEventListener('click',e=>{const b=e.target.closest('button[data-view]');if(!b)return;blip(600);setView(b.dataset.view)});
+$('stops').addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;blip(780);openTopic=+c.dataset.i;if(state.read)say(TOPICS[openTopic].t);setView('path')});
+$('topics').addEventListener('click',e=>{const r=e.target.closest('.trow');if(!r)return;blip(780);openTopic=+r.dataset.i;setView('path')});
+$('path-back').onclick=()=>{blip(440);setView('map')};
+$('change-world').onclick=()=>{blip(440);startOnboarding(2,true)};
+$('speak').onclick=()=>{const S=SKINS[state.skin];say(`${S.h}. ${S.sub}`)};
+$('who').onclick=()=>{const m=$('menu');m.hidden=!m.hidden;$('who').setAttribute('aria-expanded',!m.hidden)};
+document.addEventListener('click',e=>{if(!e.target.closest('.who'))$('menu').hidden=true});
+$('menu').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return; $('menu').hidden=true;
+  const g=b.dataset.go;
+  if(g==='signout'){toast('Signed out. See you soon!');startOnboarding(0,false);return}
+  startOnboarding(STEPS.indexOf(g),true);
+});
+
+$('ob-logo').innerHTML=hippoHead();
 applyHelpers();
-renderOnboard();
+startOnboarding(0,false);
 })();
 </script>
 </body>
